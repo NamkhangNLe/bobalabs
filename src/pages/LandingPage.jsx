@@ -1,63 +1,103 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
     return (
-        <div className="landing-page">
-            <section style={{
-                minHeight: '80vh',
+        <div className="container" style={{ padding: '4rem 2rem', overflow: 'hidden' }}>
+
+            {/* Scattered Hero Section */}
+            <div style={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                padding: '2rem'
+                position: 'relative',
+                minHeight: '80vh',
+                justifyContent: 'center'
             }}>
+                {/* Background Blob */}
                 <div style={{
                     position: 'absolute',
-                    top: '50%',
+                    top: '40%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '600px',
-                    height: '600px',
-                    background: 'radial-gradient(circle, rgba(255, 183, 197, 0.25) 0%, rgba(255,255,255,0) 70%)',
+                    width: '700px',
+                    height: '700px',
+                    background: 'radial-gradient(circle, rgba(255, 183, 197, 0.3) 0%, rgba(255,255,255,0) 70%)',
                     zIndex: -1
                 }} />
 
-                <h1 className="fade-in" style={{ fontSize: '4rem', marginBottom: '1.5rem', lineHeight: 1.1 }}>
-                    Hiring is broken.<br />
-                    <span className="text-gradient">Trust is the currency.</span>
-                </h1>
-
-                <p className="fade-in delay-1" style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', maxWidth: '600px', marginBottom: '3rem' }}>
-                    Stop filtering through thousands of applications. Access a closed network of high-caliber engineers, vetted by peers you trust.
-                </p>
-
-                <div className="fade-in delay-2" style={{ display: 'flex', gap: '1.5rem' }}>
-                    <Link to="/board" className="btn btn-primary">I'm Hiring</Link>
-                    <Link to="/apply" className="btn btn-glass">I want to be Vetted</Link>
+                {/* Main Sticker Title */}
+                <div className="sticker rotate-neg-2 fade-in" style={{
+                    background: '#fff',
+                    padding: '2rem 4rem',
+                    borderRadius: '50px',
+                    marginBottom: '2rem',
+                    textAlign: 'center'
+                }}>
+                    <h1 style={{
+                        fontSize: '4.5rem',
+                        margin: 0,
+                        lineHeight: 1,
+                        color: 'var(--text-primary)'
+                    }}>
+                        Friends <br />
+                        <span style={{ color: 'var(--accent-secondary)' }}>&gt;</span> Algorithms
+                    </h1>
                 </div>
-            </section>
 
-            <section className="container" style={{ padding: '5rem 0', borderTop: '1px solid var(--glass-border)' }}>
-                <h2 style={{ textAlign: 'center', marginBottom: '3rem' }}>How it works</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                    <div className="glass-card">
-                        <h3 className="text-gradient">1. Vetted by Peers</h3>
-                        <p style={{ color: 'var(--text-secondary)' }}>No automated tests. Candidates are vouched for by senior engineers in the network.</p>
-                    </div>
-                    <div className="glass-card">
-                        <h3 className="text-gradient">2. Anonymous First</h3>
-                        <p style={{ color: 'var(--text-secondary)' }}>Browse candidates by merit and vouch strength, not just logos. Request intros when interested.</p>
-                    </div>
-                    <div className="glass-card">
-                        <h3 className="text-gradient">3. Direct Connection</h3>
-                        <p style={{ color: 'var(--text-secondary)' }}>Skip the recruiter spam. Connect directly with talent that is ready to move.</p>
-                    </div>
+                {/* Subtitle Note */}
+                <div className="rotate-3 fade-in delay-1" style={{
+                    background: '#FFF0F5',
+                    padding: '1.5rem',
+                    maxWidth: '500px',
+                    boxShadow: 'var(--shadow-sm)',
+                    transform: 'rotate(2deg)',
+                    marginBottom: '3rem'
+                }}>
+                    <p style={{ fontSize: '1.4rem', margin: 0, color: 'var(--text-secondary)' }}>
+                        Skip the resume black hole. Get referred by someone who actually knows you.
+                    </p>
                 </div>
-            </section>
+
+                {/* CTA Buttons - Scattered */}
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                    <Link to="/apply" className="btn btn-primary rotate-neg-1 sticker">
+                        Join the Network
+                    </Link>
+                    <Link to="/board" className="btn btn-glass rotate-2" style={{ borderRadius: '255px 15px 225px 15px/15px 225px 15px 255px' }}>
+                        View Board
+                    </Link>
+                </div>
+            </div>
+
+            {/* Features (Sticky Notes) */}
+            <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                gap: '3rem',
+                marginTop: '4rem'
+            }}>
+                <div className="glass-card rotate-1 sticker" style={{ flex: '1 1 300px', maxWidth: '350px', background: '#fff' }}>
+                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤝</div>
+                    <h3>Vetted by Humans</h3>
+                    <p>No AI filtering. Just real recommendations from engineers who trust you.</p>
+                </div>
+
+                <div className="glass-card rotate-neg-2 sticker" style={{ flex: '1 1 300px', maxWidth: '350px', background: '#F0F8FF' }}>
+                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📨</div>
+                    <h3>Direct to Inbox</h3>
+                    <p>Skip the ATS. We send your profile directly to hiring managers' DMs.</p>
+                </div>
+
+                <div className="glass-card rotate-2 sticker" style={{ flex: '1 1 300px', maxWidth: '350px', background: '#FFF0F5' }}>
+                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🍵</div>
+                    <h3>The Daily Brew</h3>
+                    <p>Get fresh career advice and industry tea. No corporate fluff.</p>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default LandingPage
+export default LandingPage;

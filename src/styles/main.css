@@ -15,20 +15,60 @@
   /* Opaque White */
   --glass-border: rgba(140, 160, 215, 0.2);
   /* Soft Blue Border */
-  --font-main: 'Inter', system-ui, sans-serif;
+  --font-main: 'Fredoka', 'Inter', system-ui, sans-serif;
   --radius-md: 16px;
   --radius-lg: 32px;
   --shadow-sm: 0 4px 12px rgba(42, 48, 82, 0.04);
   --shadow-md: 0 8px 24px rgba(42, 48, 82, 0.08);
+  --shadow-sticker: 4px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 body {
   margin: 0;
   font-family: var(--font-main);
   background-color: var(--bg-primary);
+  /* Optional: Dot grid texture */
+  background-image: radial-gradient(var(--glass-border) 1px, transparent 1px);
+  background-size: 20px 20px;
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+}
+
+/* Sticker Utilities */
+.rotate-1 {
+  transform: rotate(1deg);
+}
+
+.rotate-2 {
+  transform: rotate(2deg);
+}
+
+.rotate-3 {
+  transform: rotate(3deg);
+}
+
+.rotate-neg-1 {
+  transform: rotate(-1deg);
+}
+
+.rotate-neg-2 {
+  transform: rotate(-2deg);
+}
+
+.rotate-neg-3 {
+  transform: rotate(-3deg);
+}
+
+.sticker {
+  border: 4px solid white;
+  box-shadow: var(--shadow-sticker);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sticker:hover {
+  transform: scale(1.02) rotate(0deg) !important;
+  z-index: 10;
 }
 
 a {

@@ -1,68 +1,88 @@
-import React, { useState } from 'react'
-
-const MOCK_CANDIDATES = [
-    {
-        id: 1,
-        role: "Senior Staff Engineer",
-        stack: "React, Node, Go",
-        experience: "12 years",
-        vouch: "Built the payment infrastructure at UnicornCorp. Absolute rockstar at scaling systems.",
-        vouchedBy: "Ex-CTO of FintechCo"
-    },
-    {
-        id: 2,
-        role: "Founding Product Designer",
-        stack: "Figma, React, Design Systems",
-        experience: "8 years",
-        vouch: "Designed the app that won Apple Design Award 2023. Fast execution.",
-        vouchedBy: "Product Lead at BigTech"
-    },
-    {
-        id: 3,
-        role: "Machine Learning Engineer",
-        stack: "Python, PyTorch, LLMs",
-        experience: "5 years",
-        vouch: "Top contributor to open source LLM libraries. Deep theoretical & practical knowledge.",
-        vouchedBy: "Research Scientist at AI Lab"
-    }
-]
+import React from 'react';
+import CandidateCard from '../components/CandidateCard';
 
 const CandidateBoard = () => {
-    const [candidates] = useState(MOCK_CANDIDATES)
+    const candidates = [
+        {
+            id: 1,
+            name: "Alex C.",
+            role: "Frontend Architect",
+            hype: "Built a design system used by 50k+ devs. Obsessed with accessibility.",
+            tags: ["React", "A11y", "System Design"],
+            rotation: "rotate-neg-2"
+        },
+        {
+            id: 2,
+            name: "Sarah L.",
+            role: "Product Engineer",
+            hype: "Ex-Founder. Can ship a feature from Figma to Prod in 2 days.",
+            tags: ["Fullstack", "Node", "Product Sense"],
+            rotation: "rotate-1"
+        },
+        {
+            id: 3,
+            name: "Mike T.",
+            role: "Backend Scaler",
+            hype: "Optimized a Postgres query from 2s to 20ms. Loves Rust.",
+            tags: ["Rust", "Postgres", "Infra"],
+            rotation: "rotate-3"
+        },
+        {
+            id: 4,
+            name: "Jessica W.",
+            role: "iOS Craftsperson",
+            hype: "Her apps feel like magic. 60fps animations or nothing.",
+            tags: ["SwiftUI", "Metal", "Animations"],
+            rotation: "rotate-neg-1"
+        },
+        {
+            id: 5,
+            name: "David K.",
+            role: "Growth Engineer",
+            hype: "Hacked a waitlist to 10k users. Data-driven but writes clean code.",
+            tags: ["Python", "AB Testing", "Analytics"],
+            rotation: "rotate-2"
+        }
+    ];
 
     return (
-        <div className="container" style={{ padding: '3rem 0' }}>
-            <header style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                    <h1>Vetted Talent Pool</h1>
-                    <p style={{ color: 'var(--text-secondary)' }}>Only the top 1% of peer-reviewed candidates.</p>
-                </div>
-                <div className="btn btn-glass">Filter: All Roles</div>
-            </header>
+        <div className="container" style={{ padding: '4rem 2rem' }}>
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <h1 className="fade-in" style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+                    Freshly Brewed Talent 🍵
+                </h1>
+                <p className="fade-in delay-1" style={{ fontSize: '1.2rem', color: 'var(--text-secondary)' }}>
+                    Vetted by friends. Ready to ship.
+                </p>
+            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '2rem' }}>
+            <div className="fade-in delay-2" style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                gap: '3rem',
+                padding: '2rem'
+            }}>
                 {candidates.map(candidate => (
-                    <div key={candidate.id} className="glass-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <div>
-                            <h3 style={{ margin: 0 }}>{candidate.role}</h3>
-                            <span style={{ fontSize: '0.9rem', color: 'var(--accent-primary)' }}>{candidate.stack}</span>
-                        </div>
-
-                        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '8px' }}>
-                            <p style={{ margin: 0, fontStyle: 'italic', color: 'var(--text-secondary)' }}>"{candidate.vouch}"</p>
-                            <div style={{ marginTop: '0.5rem', fontSize: '0.8rem', color: 'var(--text-primary)', opacity: 0.7 }}>
-                                — Vouched by {candidate.vouchedBy}
-                            </div>
-                        </div>
-
-                        <div style={{ marginTop: 'auto', paddingTop: '1rem' }}>
-                            <button className="btn btn-primary" style={{ width: '100%' }}>Request Intro</button>
-                        </div>
-                    </div>
+                    <CandidateCard key={candidate.id} {...candidate} />
                 ))}
             </div>
-        </div>
-    )
-}
 
-export default CandidateBoard
+            <div style={{
+                marginTop: '4rem',
+                textAlign: 'center',
+                padding: '2rem',
+                border: '2px dashed var(--glass-border)',
+                borderRadius: 'var(--radius-lg)',
+                color: 'var(--text-secondary)'
+            }}>
+                <p>Want to see the full roster?</p>
+                <div style={{ display: 'inline-block', padding: '0.5rem 1rem', background: '#ffe4e1', borderRadius: '4px', marginTop: '0.5rem', fontWeight: 'bold', color: '#d65a5a' }}>
+                    🔒 15 more candidates hidden
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default CandidateBoard;
