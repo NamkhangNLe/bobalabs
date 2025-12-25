@@ -1,14 +1,14 @@
 :root {
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #1a1a1a;
+  --bg-primary: #0f1410;
+  --bg-secondary: #1a211b;
   --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --accent-primary: #00f0ff;
-  /* Neon Cyan */
-  --accent-secondary: #7000ff;
-  /* Neon Purple */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-secondary: #b0b8b0;
+  --accent-primary: #a7e0a5;
+  /* Matcha Green */
+  --accent-secondary: #e6c8b0;
+  /* Milk Tea */
+  --glass-bg: rgba(20, 30, 20, 0.4);
+  --glass-border: rgba(167, 224, 165, 0.15);
   --font-main: 'Inter', system-ui, sans-serif;
   --radius-md: 12px;
   --radius-lg: 20px;

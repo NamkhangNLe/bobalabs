@@ -20,7 +20,7 @@ const LandingPage = () => {
                     transform: 'translate(-50%, -50%)',
                     width: '600px',
                     height: '600px',
-                    background: 'radial-gradient(circle, rgba(0,240,255,0.1) 0%, rgba(0,0,0,0) 70%)',
+                    background: 'radial-gradient(circle, rgba(167, 224, 165, 0.15) 0%, rgba(0,0,0,0) 70%)',
                     zIndex: -1
                 }} />
 
