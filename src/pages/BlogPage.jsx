@@ -41,7 +41,7 @@ const BlogPage = () => {
             <div style={{ display: 'grid', gap: '2rem', maxWidth: '800px', margin: '0 auto' }}>
                 {articles.map((article) => (
                     <article key={article.id} className="glass-card fade-in" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem', color: 'var(--accent-primary)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 'bold' }}>
                             <span style={{ textTransform: 'uppercase', letterSpacing: '1px' }}>{article.tag}</span>
                             <span>{article.readTime}</span>
                         </div>
