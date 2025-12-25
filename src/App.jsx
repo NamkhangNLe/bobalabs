@@ -17,8 +17,9 @@ const App = () => {
                     maxWidth: '1200px',
                     margin: '0 auto'
                 }}>
-                    <Link to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold', textDecoration: 'none' }}>
-                        🧋 Boba Labs
+                    <Link to="/" style={{ fontSize: '2rem', fontWeight: '700', textDecoration: 'none', fontFamily: "'Fredoka', sans-serif", letterSpacing: '-1px' }}>
+                        <span style={{ color: 'var(--text-primary)' }}>Boba</span>
+                        <span style={{ color: '#FFB7C5' }}>Labs</span>
                     </Link>
                     <div style={{ display: 'flex', gap: '2rem' }}>
                         <Link to="/blog">The Daily Brew</Link>
