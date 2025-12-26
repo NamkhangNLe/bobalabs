@@ -4,41 +4,59 @@ import CandidateCard from '../components/CandidateCard';
 const CandidateBoard = () => {
     const candidates = [
         {
-            id: 1,
-            name: "Alex C.",
-            role: "Frontend Architect",
-            hype: "Built a design system used by 50k+ devs. Obsessed with accessibility.",
-            tags: ["React", "A11y", "System Design"],
-            rotation: "rotate-neg-2"
+            id: 3,
+            name: "Pau Sum",
+            role: "Systems Engineer",
+            targetRole: "Kernel Engineering Intern",
+            companyType: "Big Tech",
+            hype: "GT CS MS. FreeBSD GSoC contributor implementing journaling for ext3/4. Expert in C and OS internals.",
+            tags: ["C", "FreeBSD", "Kernel", "File Systems"],
+            rotation: "rotate-3",
+            emoji: "🐶",
+            link: "https://www.linkedin.com/in/pausum"
         },
         {
             id: 2,
-            name: "Sarah L.",
+            name: "Syaam Khandaker",
             role: "Product Engineer",
-            hype: "Ex-Founder. Can ship a feature from Figma to Prod in 2 days.",
-            tags: ["Fullstack", "Node", "Product Sense"],
-            rotation: "rotate-1"
+            targetRole: "SWE Intern",
+            companyType: "Startups / Big Tech",
+            hype: "GT CS. Founding Engineer @ Phia. Shipped 'Formulytics' for F1 racing and full-stack mobile apps for startups. Expert in product engineering from 0 to 1.",
+            tags: ["React", "TypeScript", "Node.js", "Python"],
+            rotation: "rotate-1",
+            emoji: "🐻",
+            link: "https://www.linkedin.com/in/syaamkhandaker"
         },
         {
-            id: 3,
-            name: "Mike T.",
-            role: "Backend Scaler",
-            hype: "Optimized a Postgres query from 2s to 20ms. Loves Rust.",
-            tags: ["Rust", "Postgres", "Infra"],
-            rotation: "rotate-3"
+            id: 1,
+            name: "Alex Chen",
+            role: "Software Engineer ",
+            targetRole: "Backend Engineer",
+            companyType: "Big Tech",
+            hype: "GT CS (4.0 GPA). TikTok SWE Intern who built Redis-backed propagation layers. Expert in Go, AWS, and Distributed Systems.",
+            tags: ["Go", "Distributed Systems", "AWS", "Redis"],
+            rotation: "rotate-neg-2",
+            emoji: "🐢",
+            link: "https://www.linkedin.com/in/ayhschen"
         },
         {
             id: 4,
-            name: "Jessica W.",
-            role: "iOS Craftsperson",
-            hype: "Her apps feel like magic. 60fps animations or nothing.",
-            tags: ["SwiftUI", "Metal", "Animations"],
-            rotation: "rotate-neg-1"
+            name: "Henry Zhang",
+            role: "AI Engineer",
+            targetRole: "AI SWE / Technical PM",
+            companyType: "AI Startups / Big Tech",
+            hype: "NYU CS. AI Specialist (ex-Microsoft, Medidata). Built LLM agents, vector search, and MERN apps with continuous deployment.",
+            tags: ["AI", "React", "AWS", "LLMs"],
+            rotation: "rotate-neg-1",
+            emoji: "🐙",
+            link: "https://www.linkedin.com/in/henryszhang"
         },
         {
             id: 5,
             name: "David K.",
-            role: "Growth Engineer",
+            role: "Fullstack Eng",
+            targetRole: "Fullstack Engineer",
+            companyType: "EdTech Startup",
             hype: "Hacked a waitlist to 10k users. Data-driven but writes clean code.",
             tags: ["Python", "AB Testing", "Analytics"],
             rotation: "rotate-2"

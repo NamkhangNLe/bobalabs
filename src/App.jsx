@@ -21,9 +21,10 @@ const App = () => {
                         <span style={{ color: 'var(--text-primary)' }}>Boba</span>
                         <span style={{ color: '#FFB7C5' }}>Labs</span>
                     </Link>
-                    <div style={{ display: 'flex', gap: '2rem' }}>
-                        <Link to="/blog">The Daily Brew</Link>
-                        <Link to="/board">Find Talent</Link>
+                    <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+                        <Link to="/" style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Home</Link>
+                        <Link to="/blog" style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>The Daily Brew</Link>
+                        <Link to="/board" style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Find Talent</Link>
                         <Link to="/apply" className="btn btn-primary" style={{ padding: '0.5rem 1.2rem', fontSize: '0.9rem' }}>
                             Join Network
                         </Link>

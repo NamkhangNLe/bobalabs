@@ -4,6 +4,8 @@ const IntakeTicket = () => {
     const [formData, setFormData] = useState({
         name: '',
         role: '',
+        targetRole: '',
+        companyType: '',
         hype: ''
     });
 
@@ -28,7 +30,8 @@ const IntakeTicket = () => {
                 backgroundImage: 'repeating-linear-gradient(#f0f0f0 0 1px, transparent 1px 100%)',
                 backgroundSize: '100% 2rem',
                 lineHeight: '2rem',
-                position: 'relative'
+                position: 'relative',
+                marginBottom: '4rem'
             }}>
                 {/* Ticket Hole */}
                 <div style={{
@@ -43,8 +46,8 @@ const IntakeTicket = () => {
                     boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
                 }} />
 
-                <h2 style={{ textAlign: 'center', marginBottom: '2rem', marginTop: '1rem', fontFamily: "'Courier New', monospace", textTransform: 'uppercase' }}>
-                    Order Ticket #001
+                <h2 style={{ textAlign: 'center', marginBottom: '2rem', marginTop: '2rem', fontFamily: "'Courier New', monospace", textTransform: 'uppercase' }}>
+                    Registration Ticket
                 </h2>
 
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -53,6 +56,7 @@ const IntakeTicket = () => {
                         <label style={{ fontWeight: 'bold', fontFamily: "'Courier New', monospace" }}>SERVER (YOUR NAME):</label>
                         <input
                             type="text"
+                            required
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             style={{
@@ -69,9 +73,10 @@ const IntakeTicket = () => {
                     </div>
 
                     <div className="form-group">
-                        <label style={{ fontWeight: 'bold', fontFamily: "'Courier New', monospace" }}>INGREDIENTS (ROLE):</label>
+                        <label style={{ fontWeight: 'bold', fontFamily: "'Courier New', monospace" }}>INGREDIENTS (CURRENT ROLE):</label>
                         <input
                             type="text"
+                            required
                             value={formData.role}
                             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                             style={{
@@ -84,6 +89,46 @@ const IntakeTicket = () => {
                                 fontFamily: "'Courier New', monospace"
                             }}
                             placeholder="e.g. Frontend Wizard"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label style={{ fontWeight: 'bold', fontFamily: "'Courier New', monospace" }}>DESIRED BREW (TARGET ROLE):</label>
+                        <input
+                            type="text"
+                            required
+                            value={formData.targetRole}
+                            onChange={(e) => setFormData({ ...formData, targetRole: e.target.value })}
+                            style={{
+                                width: '100%',
+                                border: 'none',
+                                borderBottom: '2px solid #000',
+                                background: 'transparent',
+                                fontSize: '1.2rem',
+                                padding: '0.5rem 0',
+                                fontFamily: "'Courier New', monospace"
+                            }}
+                            placeholder="e.g. Senior Product Lead"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label style={{ fontWeight: 'bold', fontFamily: "'Courier New', monospace" }}>CAFE TYPE (COMPANIES):</label>
+                        <input
+                            type="text"
+                            required
+                            value={formData.companyType}
+                            onChange={(e) => setFormData({ ...formData, companyType: e.target.value })}
+                            style={{
+                                width: '100%',
+                                border: 'none',
+                                borderBottom: '2px solid #000',
+                                background: 'transparent',
+                                fontSize: '1.2rem',
+                                padding: '0.5rem 0',
+                                fontFamily: "'Courier New', monospace"
+                            }}
+                            placeholder="e.g. Series B Fintech, Bootstrapped"
                         />
                     </div>
 
@@ -108,7 +153,7 @@ const IntakeTicket = () => {
                     </div>
 
                     <button type="submit" className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }}>
-                        SUBMIT ORDER
+                        SUBMIT REQUEST
                     </button>
 
                 </form>
