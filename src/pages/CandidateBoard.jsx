@@ -21,7 +21,7 @@ const CandidateBoard = () => {
             role: "Product Engineer",
             targetRole: "SWE Intern",
             companyType: "Startups / Big Tech",
-            hype: "GT CS. Founding Engineer @ Phia. Shipped 'Formulytics' for F1 racing and full-stack mobile apps for startups. Expert in product engineering from 0 to 1.",
+            hype: "GT CS MS. Founding Engineer @ Phia. Shipped mobile & web infra for YC startups (Overlap, Sellraze). Expert in 0-to-1 product engineering and Ex-Amazon Intern.",
             tags: ["React", "TypeScript", "Node.js", "Python"],
             rotation: "rotate-1",
             emoji: "🐻",
