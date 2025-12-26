@@ -53,13 +53,15 @@ const CandidateBoard = () => {
         },
         {
             id: 5,
-            name: "David K.",
-            role: "Fullstack Eng",
-            targetRole: "Fullstack Engineer",
-            companyType: "EdTech Startup",
-            hype: "Hacked a waitlist to 10k users. Data-driven but writes clean code.",
-            tags: ["Python", "AB Testing", "Analytics"],
-            rotation: "rotate-2"
+            name: "Namkhang Le",
+            role: "Software Engineer",
+            targetRole: "Machine Learning Engineer",
+            companyType: "Big Tech",
+            hype: "GT CS (AI/ML). Meta AI. Ex-Amazon, Citi, Lockheed Martin Intern. Winner of AI ATL Hackathon. Expert in building agentic AI and full-stack infra.",
+            tags: ["Java", "Python", "AWS", "React", "AI"],
+            rotation: "rotate-2",
+            emoji: "🐳",
+            link: "https://linkedin.com/in/NamkhangNLe"
         }
     ];
 
