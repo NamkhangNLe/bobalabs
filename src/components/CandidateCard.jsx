@@ -4,14 +4,14 @@ const CandidateCard = ({ name, role, hype, tags, rotation, targetRole, companyTy
     const CardContent = (
         <div className={`sticker ${rotation}`} style={{
             background: 'white',
-            padding: '1rem 1rem 3rem 1rem', // Extra bottom padding for Polaroid look
+            padding: '1rem 1rem 1.5rem 1rem', // Reduced bottom padding for a more compact look
             borderRadius: '4px',
             boxShadow: 'var(--shadow-sticker)',
             maxWidth: '300px',
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
-            gap: '1rem',
+            gap: '0.8rem', // Slightly tighter gap
             transition: 'transform 0.2s',
             cursor: 'pointer',
             height: '100%',
