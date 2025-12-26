@@ -11,7 +11,19 @@ const IntakeTicket = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert(`Order Received! We'll brew your profile, ${formData.name}. 🍵`);
+
+        const subject = encodeURIComponent(`Boba Labs Vouch Request: ${formData.name}`);
+        const body = encodeURIComponent(
+            `New Vouch Order Received! 🍵\n\n` +
+            `SERVER (NAME): ${formData.name}\n` +
+            `INGREDIENTS (CURRENT ROLE): ${formData.role}\n` +
+            `DESIRED BREW (TARGET ROLE): ${formData.targetRole}\n` +
+            `CAFE TYPE (COMPANIES): ${formData.companyType}\n\n` +
+            `SPECIAL REQUESTS (PITCH):\n${formData.hype}\n\n` +
+            `--- Sent via Boba Labs ---`
+        );
+
+        window.location.href = `mailto:Namkhangnle@hotmail.com?subject=${subject}&body=${body}`;
     };
 
     return (
