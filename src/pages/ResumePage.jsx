@@ -28,14 +28,19 @@ const ResumePage = () => {
     const [isOverflowing, setIsOverflowing] = useState(false);
     const [resumeData, setResumeData] = useState({
         personal: {
-            name: "Namkhang Le"
+            name: "Namkhang Le",
+            email: "NamkhangNLe@hotmail.com",
+            phone: "(571) 443-0967",
+            location: "Atlanta, GA",
+            website: "NamkhangNLe.github.io",
+            linkedin: "linkedin.com/in/NamkhangNLe"
         },
         education: [
             {
                 school: "Georgia Institute of Technology",
                 location: "",
                 degree: "B.S. Computer Science, concentrations in Intelligence (AI/ML) and Information Internetworks",
-                date: "August 2021 -- May 2025",
+                date: "August 2021 - May 2025",
                 coursework: "Data Structures & Algorithms, Artificial Intelligence, Design of Algorithms"
             }
         ],
@@ -44,7 +49,7 @@ const ResumePage = () => {
                 company: "Amazon Web Services (AWS)",
                 location: "Arlington, VA",
                 role: "Software Development Engineer Intern",
-                date: "May 2024 -- August 2024",
+                date: "May 2024 - August 2024",
                 bullets: [
                     "Engineered a Java and Spring-based customer-facing communication service to automate the delivery of 10+ Government Cloud request email notifications (received, approved, denied) per day by enabling seamless integration with 3 native AWS packages.",
                     "Redesigned a 13-year-old email system into a scalable, end-to-end microservices architecture using AWS SWF, SNS, and SQS achieving a processing rate of over 5 transactions per second (TPS), ensuring redundancy and autoscaling across the application.",
@@ -55,7 +60,7 @@ const ResumePage = () => {
                 company: "Citigroup",
                 location: "Tampa, FL",
                 role: "Software Engineer Intern",
-                date: "June 2023 -- August 2023",
+                date: "June 2023 - August 2023",
                 bullets: [
                     "Spearheaded Event Master Central, a full stack application for real-time corporate action event monitoring of financial assets in Angular & Oracle Database increasing engineering awareness of deployment failures by 18%.",
                     "Revamped authentication logic, fortifying API token validation for REST API calls, contributing an 85% uptime to production.",
@@ -67,7 +72,7 @@ const ResumePage = () => {
                 company: "Lockheed Martin",
                 location: "Manassas, VA",
                 role: "Software Engineer Intern",
-                date: "May 2022 -- August 2022",
+                date: "May 2022 - August 2022",
                 bullets: [
                     "Trained a wildfire-based infrastructure identification AI model through Kubeflow, Pytorch, & Tensorflow, with 98% accuracy.",
                     "Implemented a real-time data monitoring interface in Spring, driving a 20% increase in operator awareness & object tracking.",
@@ -80,7 +85,7 @@ const ResumePage = () => {
             {
                 name: "Georgia Tech Computer Science Capstone Project",
                 link: "https://github.com/NamkhangNLe/hemodynamics-calculator",
-                date: "August 2023 -- May 2024",
+                date: "August 2023 - May 2024",
                 bullets: [
                     "Developed a Hemodynamics Calculator, a full-stack application for the Emory University School of Medicine, to be used by 10 clinicians to reduce measurement error daily, impacting over 1,000 patients within the intensive care unit.",
                     "Leveraged ReactJS, Express, and MongoDB to develop user-friendly interactive visualizations of trends in patient data and a reduction in data-related errors by 34%."
@@ -205,6 +210,11 @@ const ResumePage = () => {
                     <h3>Personal Information</h3>
                     <div className="form-grid">
                         <input name="name" placeholder="Full Name" value={resumeData.personal.name} onChange={handlePersonalInfoChange} />
+                        <input name="email" placeholder="Email" value={resumeData.personal.email} onChange={handlePersonalInfoChange} />
+                        <input name="phone" placeholder="Phone" value={resumeData.personal.phone} onChange={handlePersonalInfoChange} />
+                        <input name="location" placeholder="Location" value={resumeData.personal.location} onChange={handlePersonalInfoChange} />
+                        <input name="website" placeholder="Website" value={resumeData.personal.website} onChange={handlePersonalInfoChange} />
+                        <input name="linkedin" placeholder="LinkedIn" value={resumeData.personal.linkedin} onChange={handlePersonalInfoChange} />
                     </div>
                 </section>
 
@@ -309,6 +319,12 @@ const ResumePage = () => {
                 <div className="latex-resume" ref={previewRef}>
                     <header className="resume-header">
                         <h1>{resumeData.personal.name}</h1>
+                        <p>
+                            {resumeData.personal.email} <span className="pipe">|</span> {resumeData.personal.phone} <span className="pipe">|</span> {resumeData.personal.location}
+                        </p>
+                        <p>
+                            <a href={`https://${resumeData.personal.website}`} target="_blank" rel="noreferrer">{resumeData.personal.website}</a> <span className="pipe">|</span> <a href={`https://www.${resumeData.personal.linkedin}`} target="_blank" rel="noreferrer">{resumeData.personal.linkedin}</a>
+                        </p>
                     </header>
 
                     <section className="resume-section">
