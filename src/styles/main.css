@@ -345,7 +345,7 @@ h3 {
 .latex-resume {
   width: 8.5in;
   height: 11in;
-  padding: 1.3cm;
+  padding: 0.8 cm;
   box-sizing: border-box;
   overflow: hidden;
   font-family: "Times New Roman", Times, serif;
@@ -469,7 +469,7 @@ h3 {
     margin: 0 !important;
     width: 8.5in !important;
     height: 11in !important;
-    padding: 1.3cm !important;
+    padding: 1.3cm 1cm !important;
     position: fixed;
     top: 0;
     left: 0;

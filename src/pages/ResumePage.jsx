@@ -88,10 +88,10 @@ const EXAMPLE_DATA = {
         },
     ],
     skills: {
-        languages: "Java, Python, C, SQL, JavaScript, CSS, HTML, UML",
-        technologies: "Spring Boot, Angular, Android Studio, Bootstrap, REST, Gradle, Pandas, React",
-        development: "Agile, Jira, CI/CD, DevSecOps, CLI, Confluence, Coverity, Jenkins",
-        affiliations: "Google Student Developer (Technical Lead), Competitive Programming"
+        languages: "Java, Python, C, SQL, JavaScript, CSS, HTML, Unified Modeling Language, C#, R, Swift, LaTeX",
+        technologies: " Spring Boot, Angular, Android Studio, Bootstrap, RESTful APIs, Gradle, Pandas, Postman, React, Linux",
+        development: "Agile, Jira, CI/CD, DevSecOps, CLI, Confluence, Coverity, Jenkins, Artifactory, Unit Test, Git",
+        affiliations: "Google Student Developer (Technical Lead), Competitive Programming, Mentor Jackets, Student Alumni Association"
     }
 };
 
