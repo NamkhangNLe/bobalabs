@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CandidateCard = ({ name, role, hype, tags, rotation, targetRole, companyType, emoji, link }) => {
+const CandidateCard = ({ name, role, hype, tags, rotation, targetRole, companyType, emoji, link, image }) => {
     const CardContent = (
         <div className={`sticker ${rotation}`} style={{
             background: 'white',
@@ -18,7 +18,7 @@ const CandidateCard = ({ name, role, hype, tags, rotation, targetRole, companyTy
             color: 'inherit',
             textDecoration: 'none'
         }}>
-            {/* "Photo" Area */}
+            {/* Profile Picture */}
             <div style={{
                 background: '#f0f0f0',
                 height: '220px',
@@ -27,10 +27,22 @@ const CandidateCard = ({ name, role, hype, tags, rotation, targetRole, companyTy
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '4rem',
-                border: '1px solid #ddd'
+                border: '1px solid #ddd',
+                overflow: 'hidden'
             }}>
-                {/* Use provided emoji or fallback to random logic */}
-                {emoji || ['🐻', '🐼', '🐨', '🐸', '🐱', '🦄'][name.length % 6]}
+                {image ? (
+                    <img
+                        src={image}
+                        alt={`${name} profile`}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                        }}
+                    />
+                ) : (
+                    emoji || ['🐻', '🐼', '🐨', '🐸', '🐱', '🦄'][name.length % 6]
+                )}
             </div>
 
             {/* Content */}

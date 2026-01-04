@@ -12,7 +12,7 @@ const CandidateBoard = () => {
             hype: "GT CS MS. FreeBSD GSoC contributor implementing journaling for ext3/4. Expert in C and OS internals.",
             tags: ["C", "FreeBSD", "Kernel", "File Systems"],
             rotation: "rotate-3",
-            emoji: "🐶",
+            image: "/pau.jpeg",
             link: "https://www.linkedin.com/in/pausum"
         },
         {
@@ -24,7 +24,7 @@ const CandidateBoard = () => {
             hype: "GT CS MS. Founding Engineer @ Phia. Shipped mobile & web infra for YC startups (Overlap, Sellraze). Expert in 0-to-1 product engineering and Ex-Amazon Intern.",
             tags: ["React", "TypeScript", "Node.js", "Python"],
             rotation: "rotate-1",
-            emoji: "🐻",
+            image: "/syaam.jpeg",
             link: "https://www.linkedin.com/in/syaamkhandaker"
         },
         {
@@ -36,7 +36,7 @@ const CandidateBoard = () => {
             hype: "GT CS (4.0 GPA). TikTok SWE Intern who built Redis-backed propagation layers. Expert in Go, AWS, and Distributed Systems.",
             tags: ["Go", "Distributed Systems", "AWS", "Redis"],
             rotation: "rotate-neg-2",
-            emoji: "🐢",
+            image: "/alex.jpeg",
             link: "https://www.linkedin.com/in/ayhschen"
         },
         {
@@ -48,7 +48,7 @@ const CandidateBoard = () => {
             hype: "NYU CS. AI Specialist (ex-Microsoft, Medidata). Built LLM agents, vector search, and MERN apps with continuous deployment.",
             tags: ["AI", "React", "AWS", "LLMs"],
             rotation: "rotate-neg-1",
-            emoji: "🐙",
+            image: "/henry.jpeg",
             link: "https://www.linkedin.com/in/henryszhang"
         },
         {
@@ -60,7 +60,7 @@ const CandidateBoard = () => {
             hype: "GT CS (AI/ML). Meta AI. Ex-Amazon, Citi, Lockheed Martin Intern. Winner of AI ATL Hackathon. Expert in building agentic AI and full-stack infra.",
             tags: ["Java", "Python", "AWS", "React", "AI"],
             rotation: "rotate-2",
-            emoji: "🐳",
+            image: "/namkhang.jpeg",
             link: "https://linkedin.com/in/NamkhangNLe"
         }
     ];
