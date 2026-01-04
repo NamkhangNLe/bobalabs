@@ -171,27 +171,42 @@ h3 {
 /* Resume Maker Styles */
 .resume-maker-container {
   display: flex;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 86px);
   /* Subtract nav height */
   overflow: hidden;
-  background: var(--bg-primary);
+  background: transparent;
+  gap: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
 }
 
 .resume-editor {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
-  border-right: 2px solid var(--glass-border);
-  background: white;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  /* Hide scrollbar for cleaner look but keep functionality */
+  scrollbar-width: thin;
 }
 
 .resume-preview {
-  flex: 1.2;
+  flex: 1.5;
+  /* Wider preview area */
   padding: 2rem;
   overflow-y: auto;
-  background: #f0f2f5;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  /* Align to top */
+  position: relative;
 }
 
 .editor-header {
@@ -199,18 +214,21 @@ h3 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .editor-section {
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--glass-border);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .editor-section h3 {
   margin-bottom: 1rem;
   font-size: 1.2rem;
-  color: var(--accent-secondary);
+  color: var(--primary-color);
+  font-weight: 700;
 }
 
 .section-header {
@@ -227,11 +245,17 @@ h3 {
 }
 
 .editor-item {
-  background: var(--bg-primary);
-  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1.25rem;
   border-radius: var(--radius-md);
   margin-bottom: 1rem;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.2s ease;
+}
+
+.editor-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .item-row {
@@ -247,11 +271,11 @@ h3 {
 .editor-section textarea {
   width: 100%;
   padding: 0.8rem;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--radius-md);
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
-  background: white;
+  background: rgba(255, 255, 255, 0.5);
   transition: all 0.2s ease;
 }
 
@@ -261,6 +285,7 @@ h3 {
 .editor-section textarea:focus {
   outline: none;
   border-color: var(--primary-color);
+  background: white;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
@@ -276,7 +301,7 @@ h3 {
 
 .btn-remove,
 .btn-remove-bullet {
-  background: #fef2f2;
+  background: rgba(254, 242, 242, 0.8);
   color: #ef4444;
   border: 1px solid #fecaca;
   border-radius: 50%;
@@ -303,7 +328,7 @@ h3 {
   font-size: 0.85rem;
   font-weight: 500;
   border-radius: var(--radius-md);
-  background: var(--bg-primary);
+  background: white;
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
   cursor: pointer;
@@ -339,27 +364,25 @@ h3 {
   font-weight: 600;
   margin-bottom: 0.3rem;
   color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* LaTeX Resume Preview Styling */
 .latex-resume {
   width: 8.5in;
+  /* Fixed 11in height for authentic preview */
   height: 11in;
-  padding: 0.8 cm;
+  padding: 0.8cm;
   box-sizing: border-box;
   overflow: hidden;
   font-family: "Times New Roman", Times, serif;
   font-size: 10.5pt;
   line-height: 1.15;
   background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   color: #000;
   position: relative;
-}
-
-.latex-resume * {
-  margin: 0;
-  padding: 0;
 }
 
 .resume-header {
@@ -375,6 +398,7 @@ h3 {
   -webkit-text-fill-color: initial !important;
   background-clip: border-box !important;
   -webkit-background-clip: border-box !important;
+  margin-bottom: 4px;
 }
 
 .resume-header p {
@@ -456,12 +480,15 @@ h3 {
     height: auto !important;
     overflow: visible !important;
     display: block !important;
+    padding: 0 !important;
+    background: white !important;
   }
 
   .resume-preview {
     padding: 0 !important;
     background: white !important;
     display: block !important;
+    border: none !important;
   }
 
   .latex-resume {
@@ -469,10 +496,11 @@ h3 {
     margin: 0 !important;
     width: 8.5in !important;
     height: 11in !important;
-    padding: 1.3cm 1cm !important;
+    padding: 0.8cm !important;
     position: fixed;
     top: 0;
     left: 0;
+    transform: none !important;
   }
 
   @page {
@@ -502,6 +530,5 @@ h3 {
     min-height: auto;
     padding: 1rem;
     height: auto;
-    /* Allow auto height on mobile if needed, or keep fixed */
   }
 }

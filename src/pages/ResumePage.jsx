@@ -390,7 +390,7 @@ const ResumePage = () => {
                                     <div key={bIdx} className="bullet-row">
                                         <AutoResizeTextarea
                                             value={bullet}
-                                            placeholder="Job responsibility or achievement..."
+                                            placeholder="Accomplished [X] as measured by [Y], by doing [Z]."
                                             onChange={(e) => handleBulletChange('experience', idx, bIdx, e.target.value)}
                                         />
                                         <button className="btn-remove-bullet" onClick={() => removeBullet('experience', idx, bIdx)}>×</button>
@@ -435,7 +435,7 @@ const ResumePage = () => {
                                     <div key={bIdx} className="bullet-row">
                                         <AutoResizeTextarea
                                             value={bullet}
-                                            placeholder="Project detail..."
+                                            placeholder="Accomplished [X] as measured by [Y], by doing [Z]."
                                             onChange={(e) => handleBulletChange('projects', idx, bIdx, e.target.value)}
                                         />
                                         <button className="btn-remove-bullet" onClick={() => removeBullet('projects', idx, bIdx)}>×</button>
