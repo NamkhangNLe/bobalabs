@@ -2,6 +2,21 @@ import React, { useState, useRef, useEffect } from 'react';
 import '../styles/main.css';
 import { trackEvent } from '../analytics';
 
+// Security: Sanitize URLs to prevent XSS attacks
+const sanitizeUrl = (url) => {
+    if (!url) return '';
+    const trimmed = url.trim();
+    // Block dangerous protocols
+    if (/^(javascript|data|vbscript):/i.test(trimmed)) {
+        return '';
+    }
+    // Ensure http/https protocol
+    if (!/^https?:\/\//i.test(trimmed)) {
+        return `https://${trimmed}`;
+    }
+    return trimmed;
+};
+
 const AutoResizeTextarea = ({ value, onChange, placeholder, className }) => {
     const textareaRef = useRef(null);
 
@@ -526,7 +541,7 @@ const ResumePage = () => {
                             {(resumeData.personal.email || EXAMPLE_DATA.personal.email)} <span className="pipe">|</span> {(resumeData.personal.phone || EXAMPLE_DATA.personal.phone)} <span className="pipe">|</span> {(resumeData.personal.location || EXAMPLE_DATA.personal.location)}
                         </p>
                         <p>
-                            <a href={`https://${(resumeData.personal.website || EXAMPLE_DATA.personal.website)}`} target="_blank" rel="noreferrer">{(resumeData.personal.website || EXAMPLE_DATA.personal.website)}</a> <span className="pipe">|</span> <a href={`https://www.${(resumeData.personal.linkedin || EXAMPLE_DATA.personal.linkedin)}`} target="_blank" rel="noreferrer">{(resumeData.personal.linkedin || EXAMPLE_DATA.personal.linkedin)}</a>
+                            <a href={sanitizeUrl(resumeData.personal.website || EXAMPLE_DATA.personal.website)} target="_blank" rel="noopener noreferrer">{(resumeData.personal.website || EXAMPLE_DATA.personal.website)}</a> <span className="pipe">|</span> <a href={sanitizeUrl(resumeData.personal.linkedin || EXAMPLE_DATA.personal.linkedin)} target="_blank" rel="noopener noreferrer">{(resumeData.personal.linkedin || EXAMPLE_DATA.personal.linkedin)}</a>
                         </p>
                     </header>
 
