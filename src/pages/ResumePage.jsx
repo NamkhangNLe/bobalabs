@@ -106,7 +106,15 @@ const ResumePage = () => {
 
         checkOverflow();
         window.addEventListener('resize', checkOverflow);
-        return () => window.removeEventListener('resize', checkOverflow);
+
+        // Set document title for PDF print name
+        const originalTitle = document.title;
+        document.title = "Namkhang_Le_Resume";
+
+        return () => {
+            window.removeEventListener('resize', checkOverflow);
+            document.title = originalTitle;
+        };
     }, [resumeData]);
 
     const handlePersonalInfoChange = (e) => {

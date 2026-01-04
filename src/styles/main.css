@@ -334,98 +334,92 @@ h3 {
 
 /* LaTeX Resume Preview Styling */
 .latex-resume {
-  width: 210mm;
-  height: 297mm;
-  /* Strictly A4 height */
-  background: white;
-  padding: 12mm 15mm;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Times New Roman', Times, serif;
-  /* Standard Times */
-  color: #000;
-  line-height: 1.25;
-  overflow: hidden;
-  position: relative;
+  width: 8.5in;
+  height: 11in;
+  padding: 1.3cm;
   box-sizing: border-box;
+  overflow: hidden;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 10.5pt;
+  line-height: 1.15;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #000;
+  position: relative;
+}
+
+.latex-resume * {
+  margin: 0;
+  padding: 0;
 }
 
 .resume-header {
   text-align: center;
-  margin-bottom: 8pt;
+  margin-bottom: 6px;
 }
 
 .resume-header h1 {
   font-size: 22pt;
-  margin-bottom: 3pt;
   font-weight: bold;
-  text-transform: inherit;
   color: #000 !important;
-  letter-spacing: 0;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
 }
 
 .resume-header p {
-  font-size: 10pt;
-  margin-bottom: 2pt;
-  color: #000;
-}
-
-.resume-header a {
-  text-decoration: none;
-  color: #000;
+  font-size: 10.5pt;
 }
 
 .resume-section {
-  margin-bottom: 6pt;
+  margin-top: 6px;
 }
 
 .section-title {
-  font-size: 11pt;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+  margin-bottom: 3px;
   text-transform: uppercase;
-  border-bottom: 1px solid #000;
-  /* Distinct line match */
-  margin-bottom: 3pt;
-  color: #000 !important;
-  letter-spacing: 0;
 }
 
 .section-content {
-  font-size: 11pt;
-  margin-bottom: 0;
-  color: #000;
-}
-
-.company-name {
-  font-variant: small-caps;
-  font-weight: bold;
-  font-size: 11pt;
-}
-
-.role-title {
-  font-weight: bold;
-  font-style: italic;
-  font-size: 11pt;
-}
-
-.project-header {
-  font-size: 11pt;
-}
-
-.tech-stack {
-  font-style: italic;
-  font-weight: normal;
-}
-
-.date {
-  font-weight: bold;
-  font-size: 11pt;
+  margin-bottom: 2px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1pt;
   align-items: baseline;
+}
+
+.company-name,
+.project-header span.bold {
+  font-weight: bold;
+  font-size: 10.5pt;
+}
+
+.role-title {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 10.5pt;
+}
+
+.date {
+  font-weight: bold;
+  font-size: 10.5pt;
+}
+
+.bullet-list {
+  margin-left: 12px;
+  margin-top: 2px;
+}
+
+.bullet-list li {
+  margin-bottom: 2px;
+  line-height: 1.2;
+  list-style-type: disc;
 }
 
 .bold {
@@ -434,24 +428,6 @@ h3 {
 
 .italic {
   font-style: italic;
-}
-
-.bullet-list {
-  margin: 1pt 0 4pt 15pt;
-  padding: 0;
-}
-
-.bullet-list li {
-  margin-bottom: 0;
-  list-style-type: disc;
-  color: #000;
-  font-size: 11pt;
-}
-
-.coursework {
-  margin-top: 1pt;
-  color: #000;
-  font-size: 11pt;
 }
 
 /* Print Overrides */
@@ -482,16 +458,16 @@ h3 {
   .latex-resume {
     box-shadow: none !important;
     margin: 0 !important;
-    width: 210mm !important;
-    height: 297mm !important;
-    padding: 12mm 15mm !important;
+    width: 8.5in !important;
+    height: 11in !important;
+    padding: 1.3cm !important;
     position: fixed;
     top: 0;
     left: 0;
   }
 
   @page {
-    size: A4;
+    size: letter;
     margin: 0;
   }
 }
@@ -516,5 +492,7 @@ h3 {
     width: 100%;
     min-height: auto;
     padding: 1rem;
+    height: auto;
+    /* Allow auto height on mobile if needed, or keep fixed */
   }
 }
