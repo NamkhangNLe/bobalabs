@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/main.css';
+import { trackEvent } from '../analytics';
 
 const AutoResizeTextarea = ({ value, onChange, placeholder, className }) => {
     const textareaRef = useRef(null);
@@ -227,6 +228,27 @@ const ResumePage = () => {
         };
     }, [resumeData]);
 
+    // Track edits with debounce
+    const editTimeoutRef = useRef(null);
+    const isFirstRender = useRef(true);
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        if (editTimeoutRef.current) {
+            clearTimeout(editTimeoutRef.current);
+        }
+
+        editTimeoutRef.current = setTimeout(() => {
+            trackEvent('resume_edited');
+        }, 5000); // 5 seconds debounce to capture a "session" of edits
+
+        return () => clearTimeout(editTimeoutRef.current);
+    }, [resumeData]);
+
     const handlePersonalInfoChange = (e) => {
         const { name, value } = e.target;
         setResumeData(prev => ({
@@ -297,6 +319,7 @@ const ResumePage = () => {
     };
 
     const printResume = () => {
+        trackEvent('resume_exported');
         window.print();
     };
 
