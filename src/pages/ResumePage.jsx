@@ -61,8 +61,7 @@ const EXAMPLE_DATA = {
             bullets: [
                 "Spearheaded Event Master Central, a full stack application for real-time corporate action event monitoring of financial assets in Angular & Oracle Database increasing engineering awareness of deployment failures by 18%.",
                 "Revamped authentication logic, fortifying API token validation for REST API calls, contributing an 85% uptime to production.",
-                "Orchestrated seamless integration with Institutional Services Group's Cloud services using Spring Boot, optimizing performance through JSON-based HTTP requests, and enhancing overall efficiency by 15% across the application.",
-                "Leveraged 2 Python’s Pandas DataFrame to analyze surface temperatures vs global domestic product, resulting in a 0.8 positive correlation within Tableau in support of Citi's 1 trillion dollar commitment to sustainable finance."
+                "Orchestrated seamless integration with Institutional Services Group's Cloud services using Spring Boot, optimizing performance through JSON-based HTTP requests, and enhancing overall efficiency by 15% across the application."
             ]
         },
         {
@@ -73,8 +72,7 @@ const EXAMPLE_DATA = {
             bullets: [
                 "Trained a wildfire-based infrastructure identification AI model through Kubeflow, Pytorch, & Tensorflow, with 98% accuracy.",
                 "Implemented a real-time data monitoring interface in Spring, driving a 20% increase in operator awareness & object tracking.",
-                "Transformed codebase maintainability by converting logging levels from Apache Log4J to SLF4J, achieving 80% code coverage.",
-                "Collaborated with quality analysis team to execute comprehensive testing, resulting in a 12% reduction in logging inefficiencies."
+                "Transformed codebase maintainability by converting logging levels from Apache Log4J to SLF4J, achieving 80% code coverage."
             ]
         }
     ],
@@ -128,14 +126,14 @@ const INITIAL_STATE = {
             location: "",
             role: "",
             date: "",
-            bullets: ["", "", "", ""]
+            bullets: ["", "", ""]
         },
         {
             company: "",
             location: "",
             role: "",
             date: "",
-            bullets: ["", "", "", ""]
+            bullets: ["", "", ""]
         }
     ],
     projects: [
