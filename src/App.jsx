@@ -3,6 +3,7 @@ import LandingPage from './pages/LandingPage'
 import BlogPage from './pages/BlogPage'
 import IntakeTicket from './components/IntakeTicket'
 import CandidateBoard from './pages/CandidateBoard'
+import ResumePage from './pages/ResumePage'
 import './styles/main.css'
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
                     <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
                         <Link to="/" style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Home</Link>
                         <Link to="/blog" style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>The Daily Brew</Link>
+                        <Link to="/resume" style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Resume Maker</Link>
                         <Link to="/board" style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Find Talent</Link>
                         <Link to="/apply" className="btn btn-primary" style={{ padding: '0.5rem 1.2rem', fontSize: '0.9rem' }}>
                             Join Network
@@ -36,6 +38,7 @@ const App = () => {
                     <Route path="/board" element={<CandidateBoard />} />
                     <Route path="/apply" element={<IntakeTicket />} />
                     <Route path="/blog" element={<BlogPage />} />
+                    <Route path="/resume" element={<ResumePage />} />
                 </Routes>
             </div>
         </Router>
