@@ -1,6 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/main.css';
 
+const AutoResizeTextarea = ({ value, onChange, placeholder, className }) => {
+    const textareaRef = useRef(null);
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+        }
+    }, [value]);
+
+    return (
+        <textarea
+            ref={textareaRef}
+            rows={1}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            className={`auto-resize-textarea ${className || ''}`}
+        />
+    );
+};
+
 const ResumePage = () => {
     const previewRef = useRef(null);
     const [isOverflowing, setIsOverflowing] = useState(false);
@@ -58,7 +80,6 @@ const ResumePage = () => {
             {
                 name: "Georgia Tech Computer Science Capstone Project",
                 link: "https://github.com/NamkhangNLe/hemodynamics-calculator",
-                tech: "JavaScript, ReactJS, MongoDB, ExpressJS, NodeJS",
                 date: "August 2023 -- May 2024",
                 bullets: [
                     "Developed a Hemodynamics Calculator, a full-stack application for the Emory University School of Medicine, to be used by 10 clinicians to reduce measurement error daily, impacting over 1,000 patients within the intensive care unit.",
@@ -167,19 +188,6 @@ const ResumePage = () => {
                 <div className="editor-header">
                     <h2>Resume Editor</h2>
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                        {isOverflowing && (
-                            <span style={{
-                                color: '#ff4d4d',
-                                fontSize: '0.85rem',
-                                fontWeight: '600',
-                                background: '#fff0f0',
-                                padding: '4px 8px',
-                                borderRadius: '4px',
-                                border: '1px solid #ffcccc'
-                            }}>
-                                ⚠️ Content exceeds 1 page
-                            </span>
-                        )}
                         <button className="btn btn-primary" onClick={printResume}>Export to PDF</button>
                     </div>
                 </div>
@@ -200,7 +208,7 @@ const ResumePage = () => {
                             <input placeholder="School" value={edu.school} onChange={(e) => handleListChange('education', idx, 'school', e.target.value)} />
                             <input placeholder="Degree" value={edu.degree} onChange={(e) => handleListChange('education', idx, 'degree', e.target.value)} />
                             <input placeholder="Date" value={edu.date} onChange={(e) => handleListChange('education', idx, 'date', e.target.value)} />
-                            <textarea placeholder="Coursework" value={edu.coursework} onChange={(e) => handleListChange('education', idx, 'coursework', e.target.value)} />
+                            <AutoResizeTextarea placeholder="Coursework" value={edu.coursework} onChange={(e) => handleListChange('education', idx, 'coursework', e.target.value)} />
                         </div>
                     ))}
                 </section>
@@ -225,7 +233,7 @@ const ResumePage = () => {
                             <div className="bullets-editor">
                                 {exp.bullets.map((bullet, bIdx) => (
                                     <div key={bIdx} className="bullet-row">
-                                        <textarea value={bullet} onChange={(e) => handleBulletChange('experience', idx, bIdx, e.target.value)} />
+                                        <AutoResizeTextarea value={bullet} onChange={(e) => handleBulletChange('experience', idx, bIdx, e.target.value)} />
                                         <button className="btn-remove-bullet" onClick={() => removeBullet('experience', idx, bIdx)}>×</button>
                                     </div>
                                 ))}
@@ -255,7 +263,7 @@ const ResumePage = () => {
                             <div className="bullets-editor">
                                 {proj.bullets.map((bullet, bIdx) => (
                                     <div key={bIdx} className="bullet-row">
-                                        <textarea value={bullet} onChange={(e) => handleBulletChange('projects', idx, bIdx, e.target.value)} />
+                                        <AutoResizeTextarea value={bullet} onChange={(e) => handleBulletChange('projects', idx, bIdx, e.target.value)} />
                                         <button className="btn-remove-bullet" onClick={() => removeBullet('projects', idx, bIdx)}>×</button>
                                     </div>
                                 ))}
@@ -271,19 +279,19 @@ const ResumePage = () => {
                     <div className="skills-grid">
                         <div className="field">
                             <label>Languages</label>
-                            <textarea value={resumeData.skills.languages} onChange={(e) => handleSkillChange('languages', e.target.value)} />
+                            <AutoResizeTextarea value={resumeData.skills.languages} onChange={(e) => handleSkillChange('languages', e.target.value)} />
                         </div>
                         <div className="field">
                             <label>Technologies</label>
-                            <textarea value={resumeData.skills.technologies} onChange={(e) => handleSkillChange('technologies', e.target.value)} />
+                            <AutoResizeTextarea value={resumeData.skills.technologies} onChange={(e) => handleSkillChange('technologies', e.target.value)} />
                         </div>
                         <div className="field">
                             <label>Software Dev</label>
-                            <textarea value={resumeData.skills.development} onChange={(e) => handleSkillChange('development', e.target.value)} />
+                            <AutoResizeTextarea value={resumeData.skills.development} onChange={(e) => handleSkillChange('development', e.target.value)} />
                         </div>
                         <div className="field">
                             <label>Affiliations</label>
-                            <textarea value={resumeData.skills.affiliations} onChange={(e) => handleSkillChange('affiliations', e.target.value)} />
+                            <AutoResizeTextarea value={resumeData.skills.affiliations} onChange={(e) => handleSkillChange('affiliations', e.target.value)} />
                         </div>
                     </div>
                 </section>
@@ -340,7 +348,7 @@ const ResumePage = () => {
                             <div key={idx} className="section-content project-item">
                                 <div className="row">
                                     <div className="project-header">
-                                        <span className="bold">{proj.name}</span> <span className="tech-stack">| {proj.tech}</span>
+                                        <span className="bold">{proj.name}</span>
                                     </div>
                                     <span className="date">{proj.date}</span>
                                 </div>
