@@ -6,12 +6,7 @@ const ResumePage = () => {
     const [isOverflowing, setIsOverflowing] = useState(false);
     const [resumeData, setResumeData] = useState({
         personal: {
-            name: "Namkhang Le",
-            email: "NamkhangNLe@hotmail.com",
-            phone: "(571) 443-0967",
-            location: "Atlanta, GA",
-            website: "NamkhangNLe.github.io",
-            linkedin: "linkedin.com/in/NamkhangNLe"
+            name: "Namkhang Le"
         },
         education: [
             {
@@ -19,7 +14,7 @@ const ResumePage = () => {
                 location: "",
                 degree: "B.S. Computer Science, concentrations in Intelligence (AI/ML) and Information Internetworks",
                 date: "August 2021 -- May 2025",
-                coursework: "Data Structures & Algorithms, Artificial Intelligence, Design & Analysis of Algorithms, Computer Organization & Programming, Probability & Statistics, Combinatorics, Linear Algebra, Computer Systems & Networks, Database Systems"
+                coursework: "Data Structures & Algorithms, Artificial Intelligence, Design of Algorithms"
             }
         ],
         experience: [
@@ -70,34 +65,13 @@ const ResumePage = () => {
                     "Leveraged ReactJS, Express, and MongoDB to develop user-friendly interactive visualizations of trends in patient data and a reduction in data-related errors by 34%."
                 ]
             },
-            {
-                name: "ScribbleTex (AI ATL Hackathon GitHub Winner)",
-                link: "https://devpost.com/software/scribbletex",
-                tech: "JavaScript, Google Cloud Platform, VertexAI, Flask, ReactJS",
-                date: "November 2023",
-                bullets: [
-                    "Preprocessed 3 datasets comprising over 200,000 samples for the training of a custom machine learning model Scikit-learn.",
-                    "Developed a decision tree classifier and a convolutional neural network using Keras achieving a 97% translation accuracy.",
-                    "Implemented a React-base frontend built using HTML, CSS, and JavaScript connected to a Python Flask backend with Rest API endpoints for optimized communication with the CNN model hosted on Google Cloud's Vertex AI platform."
-                ]
-            },
-            {
-                name: "MorseTorch (HackGT Hackathon)",
-                link: "https://devpost.com/software/morse-torch",
-                tech: "Swift, Python, Pandas, Jupyter Notebook, XCode, CoreML, Torch, Carthage",
-                date: "October 2023",
-                bullets: [
-                    "Employed Swift-based iOS application for Morse code translation, integrating Torch and Carthage binary framework.",
-                    "Executed K-means clustering algorithm using CoreML enabling real-time translation of optical signals with a 75% accuracy rate."
-                ]
-            }
+
         ],
         skills: {
-            languages: "Java, Python, C, SQL, JavaScript, CSS, HTML, Unified Modeling Language, C#, R, Swift, LaTeX",
-            technologies: "Spring Boot, Angular, Android Studio, Bootstrap, RESTful APIs, Gradle, Pandas, Postman, React, Linux",
-            development: "Agile, Jira, CI/CD, DevSecOps, CLI, Confluence, Coverity, Jenkins, Artifactory, Unit Test, Git",
-            spoken: "English (Native), Vietnamese (Fluent), Spanish (Limited Working Proficiency)",
-            affiliations: "Google Student Developer (Technical Lead), Competitive Programming, Mentor Jackets, Student Alumni Association"
+            languages: "Java, Python, C, SQL, JavaScript, CSS, HTML, UML ",
+            technologies: "Spring Boot, Angular, Android Studio, Bootstrap, REST, Gradle, Pandas, React",
+            development: "Agile, Jira, CI/CD, DevSecOps, CLI, Confluence, Coverity, Jenkins",
+            affiliations: "Google Student Developer (Technical Lead), Competitive Programming"
         }
     });
 
@@ -215,11 +189,6 @@ const ResumePage = () => {
                     <h3>Personal Information</h3>
                     <div className="form-grid">
                         <input name="name" placeholder="Full Name" value={resumeData.personal.name} onChange={handlePersonalInfoChange} />
-                        <input name="email" placeholder="Email" value={resumeData.personal.email} onChange={handlePersonalInfoChange} />
-                        <input name="phone" placeholder="Phone" value={resumeData.personal.phone} onChange={handlePersonalInfoChange} />
-                        <input name="location" placeholder="Location" value={resumeData.personal.location} onChange={handlePersonalInfoChange} />
-                        <input name="website" placeholder="Website (url)" value={resumeData.personal.website} onChange={handlePersonalInfoChange} />
-                        <input name="linkedin" placeholder="LinkedIn (url)" value={resumeData.personal.linkedin} onChange={handlePersonalInfoChange} />
                     </div>
                 </section>
 
@@ -313,10 +282,6 @@ const ResumePage = () => {
                             <textarea value={resumeData.skills.development} onChange={(e) => handleSkillChange('development', e.target.value)} />
                         </div>
                         <div className="field">
-                            <label>Spoken Languages</label>
-                            <textarea value={resumeData.skills.spoken} onChange={(e) => handleSkillChange('spoken', e.target.value)} />
-                        </div>
-                        <div className="field">
                             <label>Affiliations</label>
                             <textarea value={resumeData.skills.affiliations} onChange={(e) => handleSkillChange('affiliations', e.target.value)} />
                         </div>
@@ -328,12 +293,6 @@ const ResumePage = () => {
                 <div className="latex-resume" ref={previewRef}>
                     <header className="resume-header">
                         <h1>{resumeData.personal.name}</h1>
-                        <p>
-                            {resumeData.personal.email} | {resumeData.personal.phone} | {resumeData.personal.location}
-                        </p>
-                        <p>
-                            <a href={`https://${resumeData.personal.website}`} target="_blank" rel="noreferrer">{resumeData.personal.website}</a> | <a href={`https://${resumeData.personal.linkedin}`} target="_blank" rel="noreferrer">{resumeData.personal.linkedin}</a>
-                        </p>
                     </header>
 
                     <section className="resume-section">
@@ -400,7 +359,6 @@ const ResumePage = () => {
                             <p><span className="bold">Programming Languages</span>: {resumeData.skills.languages}</p>
                             <p><span className="bold">Technologies</span>: {resumeData.skills.technologies}</p>
                             <p><span className="bold">Software Development</span>: {resumeData.skills.development}</p>
-                            <p><span className="bold">Spoken Languages</span>: {resumeData.skills.spoken}</p>
                             <p><span className="bold">Affiliations</span>: {resumeData.skills.affiliations}</p>
                         </div>
                     </section>
