@@ -78,7 +78,7 @@ const EXAMPLE_DATA = {
     ],
     projects: [
         {
-            name: "Georgia Tech Computer Science Capstone Project",
+            name: " Georgia Tech Computer Science Capstone Project",
             link: "https://github.com/NamkhangNLe/hemodynamics-calculator",
             date: "August 2023 - May 2024",
             bullets: [
@@ -86,11 +86,40 @@ const EXAMPLE_DATA = {
                 "Leveraged ReactJS, Express, and MongoDB to develop user-friendly interactive visualizations of trends in patient data and a reduction in data-related errors by 34%."
             ]
         },
+        {
+            name: "DiagnoseMe (Hackalytics Hackathon)",
+            link: "https://devfolio.co/projects/diagnoseme-1992",
+            date: "February 2024",
+            bullets: [
+                "Constructed a ChatGPT powered ElectronJS application for disease diagnosis supporting medical students and doctors in training",
+                "Streamlined user experience by creating 120 unique prompt-engineered scenarios through Pandas DataFrame consolidation.",
+                "Achieved a 15% reduction in development time through REST APIs for seamless data exchange via JSON between React & Flask."
+            ]
+        },
+        {
+            name: "ScribbleTex (AI ATL Hackathon Github Winner)",
+            link: "https://devpost.com/software/scribbletex",
+            date: "November 2023",
+            bullets: [
+                "Preprocessed 3 datasets comprising over 200,000 samples for the training of a custom machine learning model Scikit-learn.",
+                "Developed a decision tree classifier and a convolutional neural network using Keras achieving a 97% translation accuracy.",
+                "Implemented a React-base frontend built using HTML, CSS, and JavaScript connected to a Python Flask backend with Rest API endpoints for optimized communication with the CNN model hosted on Google Cloud’s Vertex AI platform."
+            ]
+        },
+        {
+            name: "MorseTorch (HackGT Hackathon)",
+            link: "https://devpost.com/software/morse-torch",
+            date: "October 2023",
+            bullets: [" Employed Swift-based iOS application for Morse code translation, integrating Torch and Carthage binary framework.",
+                "Executed K-means clustering algorithm using CoreML enabling real-time translation of optical signals with a 75% accuracy rate."]
+        }
+
     ],
     skills: {
         languages: "Java, Python, C, SQL, JavaScript, CSS, HTML, Unified Modeling Language, C#, R, Swift, LaTeX",
-        technologies: " Spring Boot, Angular, Android Studio, Bootstrap, RESTful APIs, Gradle, Pandas, Postman, React, Linux",
+        technologies: "Spring Boot, Angular, Android Studio, Bootstrap, RESTful APIs, Gradle, Pandas, Postman, React, Linux",
         development: "Agile, Jira, CI/CD, DevSecOps, CLI, Confluence, Coverity, Jenkins, Artifactory, Unit Test, Git",
+        spokenLanguages: "Spoken Languages: English (Native), Vietnamese (Fluent), Spanish (Limited Working Proficiency)",
         affiliations: "Google Student Developer (Technical Lead), Competitive Programming, Mentor Jackets, Student Alumni Association"
     }
 };
@@ -142,12 +171,31 @@ const INITIAL_STATE = {
             link: "",
             date: "",
             bullets: ["", ""]
+        },
+        {
+            name: "",
+            link: "",
+            date: "",
+            bullets: ["", "", ""]
+        },
+        {
+            name: "",
+            link: "",
+            date: "",
+            bullets: ["", "", ""]
+        },
+        {
+            name: "",
+            link: "",
+            date: "",
+            bullets: ["", ""]
         }
     ],
     skills: {
         languages: "",
         technologies: "",
         development: "",
+        spokenLanguages: "",
         affiliations: ""
     }
 };
@@ -435,6 +483,14 @@ const ResumePage = () => {
                                 onChange={(e) => handleSkillChange('affiliations', e.target.value)}
                             />
                         </div>
+                        <div className="field">
+                            <label>Spoken Languages</label>
+                            <AutoResizeTextarea
+                                value={resumeData.skills.spokenLanguages}
+                                placeholder="Spoken Languages"
+                                onChange={(e) => handleSkillChange('spokenLanguages', e.target.value)}
+                            />
+                        </div>
                     </div>
                 </section>
             </div>
@@ -516,6 +572,7 @@ const ResumePage = () => {
                             <p><span className="bold">Technologies</span>: {resumeData.skills.technologies || EXAMPLE_DATA.skills.technologies}</p>
                             <p><span className="bold">Software Development</span>: {resumeData.skills.development || EXAMPLE_DATA.skills.development}</p>
                             <p><span className="bold">Affiliations</span>: {resumeData.skills.affiliations || EXAMPLE_DATA.skills.affiliations}</p>
+                            <p><span className="bold">Spoken Languages</span>: {resumeData.skills.spokenLanguages || EXAMPLE_DATA.skills.spokenLanguages}</p>
                         </div>
                     </section>
                 </div>
