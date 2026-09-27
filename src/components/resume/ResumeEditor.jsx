@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AutoResizeTextarea from './AutoResizeTextarea';
+import BulletHelper from './BulletHelper';
+import { checkBullet, BLOG_URL } from '../../resume/bulletGuide';
 
 /**
  * ResumeEditor — the left-hand form. Every field writes into the shared resume
@@ -17,43 +19,107 @@ const SectionHeader = ({ title, sectionKey, order, onMove, addButton }) => (
     </div>
 );
 
-/** Reorderable, removable bullet list shared by experience + project entries. */
-const BulletEditor = ({ section, entryIndex, bullets, api }) => (
-    <div className="bullets-editor">
-        {(bullets || []).map((bullet, bIdx) => (
-            <div key={bIdx} className="bullet-row">
-                <div className="bullet-reorder">
+/** Reorderable, removable bullet list shared by experience + project entries.
+ *
+ *  Includes the "Help me write this" bullet builder and Wendy's 7-second
+ *  scan: on-blur lint nudges that never block and never score. Nudges are
+ *  keyed by bullet index and cleared on any structural change (add/remove/
+ *  move) or while the bullet is being re-typed, so they can't go stale.
+ */
+const BulletEditor = ({ section, entryIndex, bullets, api }) => {
+    const [helperOpen, setHelperOpen] = useState(false);
+    const [nudges, setNudges] = useState({});
+    const list = bullets || [];
+    const isEffectivelyEmpty = list.every((b) => !(b || '').trim());
+
+    const clearNudges = () => setNudges({});
+
+    const lintBullet = (bIdx, value) => {
+        setNudges((prev) => ({ ...prev, [bIdx]: checkBullet(value) }));
+    };
+
+    const handleBulletEdit = (bIdx, value) => {
+        // Clear this bullet's nudge while typing; it re-checks on blur.
+        setNudges((prev) => ({ ...prev, [bIdx]: [] }));
+        api.handleBulletChange(section, entryIndex, bIdx, value);
+    };
+
+    /** "Use this bullet": fill the first empty row, or append a new one. */
+    const useHelperBullet = (text) => {
+        const clean = (text || '').trim();
+        setHelperOpen(false);
+        if (!clean) return;
+        clearNudges();
+        const emptyIdx = list.findIndex((b) => !(b || '').trim());
+        if (emptyIdx >= 0) {
+            api.handleBulletChange(section, entryIndex, emptyIdx, clean);
+        } else {
+            api.addBullet(section, entryIndex);
+            api.handleBulletChange(section, entryIndex, list.length, clean);
+        }
+    };
+
+    return (
+        <div className="bullets-editor">
+            {isEffectivelyEmpty && (
+                <button type="button" className="bullet-empty-prompt" onClick={() => setHelperOpen(true)}>
+                    Not sure what to write? <span className="bullet-empty-link">Help me write this →</span>
+                </button>
+            )}
+            {list.map((bullet, bIdx) => (
+                <div key={bIdx} className="bullet-row">
+                    <div className="bullet-reorder">
+                        <button
+                            className="btn-small"
+                            onClick={() => { clearNudges(); api.moveBullet(section, entryIndex, bIdx, -1); }}
+                            disabled={bIdx === 0}
+                            aria-label="Move bullet up"
+                            title="Move bullet up"
+                        >↑</button>
+                        <button
+                            className="btn-small"
+                            onClick={() => { clearNudges(); api.moveBullet(section, entryIndex, bIdx, 1); }}
+                            disabled={bIdx === list.length - 1}
+                            aria-label="Move bullet down"
+                            title="Move bullet down"
+                        >↓</button>
+                    </div>
+                    <div className="bullet-field">
+                        <AutoResizeTextarea
+                            value={bullet || ''}
+                            placeholder="Accomplished [X] as measured by [Y], by doing [Z]."
+                            onChange={(e) => handleBulletEdit(bIdx, e.target.value)}
+                            onBlur={() => lintBullet(bIdx, bullet || '')}
+                        />
+                        {(nudges[bIdx] || []).map((nudge, nIdx) => (
+                            <p key={nIdx} className="bullet-nudge">
+                                <span role="img" aria-label="tip">💡</span> {nudge.message}{' '}
+                                <a href={BLOG_URL} target="_blank" rel="noreferrer" className="nudge-why">Why?</a>
+                            </p>
+                        ))}
+                    </div>
                     <button
-                        className="btn-small"
-                        onClick={() => api.moveBullet(section, entryIndex, bIdx, -1)}
-                        disabled={bIdx === 0}
-                        aria-label="Move bullet up"
-                        title="Move bullet up"
-                    >↑</button>
-                    <button
-                        className="btn-small"
-                        onClick={() => api.moveBullet(section, entryIndex, bIdx, 1)}
-                        disabled={bIdx === (bullets || []).length - 1}
-                        aria-label="Move bullet down"
-                        title="Move bullet down"
-                    >↓</button>
+                        className="btn-remove-bullet"
+                        onClick={() => { clearNudges(); api.removeBullet(section, entryIndex, bIdx); }}
+                        aria-label="Remove bullet"
+                        title="Remove bullet"
+                    >×</button>
                 </div>
-                <AutoResizeTextarea
-                    value={bullet || ''}
-                    placeholder="Accomplished [X] as measured by [Y], by doing [Z]."
-                    onChange={(e) => api.handleBulletChange(section, entryIndex, bIdx, e.target.value)}
-                />
-                <button
-                    className="btn-remove-bullet"
-                    onClick={() => api.removeBullet(section, entryIndex, bIdx)}
-                    aria-label="Remove bullet"
-                    title="Remove bullet"
-                >×</button>
+            ))}
+            <div className="bullets-actions">
+                <button className="btn-small" onClick={() => { clearNudges(); api.addBullet(section, entryIndex); }}>+ Add Bullet</button>
+                <button className="btn-small btn-helper" onClick={() => setHelperOpen(true)}>✨ Help me write this</button>
             </div>
-        ))}
-        <button className="btn-small" onClick={() => api.addBullet(section, entryIndex)}>+ Add Bullet</button>
-    </div>
-);
+            {helperOpen && (
+                <BulletHelper
+                    section={section}
+                    onUse={useHelperBullet}
+                    onClose={() => setHelperOpen(false)}
+                />
+            )}
+        </div>
+    );
+};
 
 /** Optional freeform paragraph rendered above the bullets in the preview. */
 const DescriptionField = ({ section, entryIndex, value, api }) => (

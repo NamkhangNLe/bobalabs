@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
  * Textarea that grows vertically to fit its content.
  * Controlled: `value` always comes from the resume model.
  */
-const AutoResizeTextarea = ({ value, onChange, placeholder, className }) => {
+const AutoResizeTextarea = ({ value, onChange, onBlur, placeholder, className }) => {
     const textareaRef = useRef(null);
 
     useEffect(() => {
@@ -20,6 +20,7 @@ const AutoResizeTextarea = ({ value, onChange, placeholder, className }) => {
             rows={1}
             value={value}
             onChange={onChange}
+            onBlur={onBlur}
             placeholder={placeholder}
             className={`auto-resize-textarea ${className || ''}`}
         />
