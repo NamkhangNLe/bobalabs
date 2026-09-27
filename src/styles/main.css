@@ -1383,3 +1383,107 @@ h3 {
     height: auto;
   }
 }
+
+/* ===== Resume Builder Additions ===== */
+
+/* Stack the preview header and scaler vertically */
+.resume-preview {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* Secondary button (Start from scratch) */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text-primary);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-1px);
+  background: white;
+}
+
+/* Helper text under the editor toolbar */
+.export-hint {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin: 0 0 1.25rem 0;
+}
+
+/* Preview pane header with the "Example resume" badge */
+.preview-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0.25rem 0.75rem;
+  margin-bottom: 0.25rem;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius-md);
+}
+
+.example-badge {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-primary));
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.35);
+}
+
+.preview-header-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Mobile preview scaler: the fixed 8.5in (816px) resume is scaled down
+   with a transform so it never overflows narrow screens. */
+.preview-scale-outer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.preview-scale-inner {
+  width: 816px;
+  max-width: none;
+  transform-origin: top left;
+}
+
+/* Disabled section-reorder buttons */
+.btn-small:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-small:disabled:hover {
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Print: never scale the resume on paper. */
+@media print {
+  .preview-scale-outer {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .preview-scale-inner {
+    transform: none !important;
+  }
+}

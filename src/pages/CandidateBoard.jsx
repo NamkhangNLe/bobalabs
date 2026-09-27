@@ -15,7 +15,7 @@ const CandidateBoard = () => {
             companyType: "Big Tech",
             hype: "GT CS MS. FreeBSD GSoC contributor implementing journaling for ext3/4. Expert in C and OS internals.",
             tags: ["C", "FreeBSD", "Kernel", "File Systems"],
-            image: "/pau.jpeg",
+            image: `${import.meta.env.BASE_URL}pau.jpeg`,
             link: "https://www.linkedin.com/in/pausum"
         },
         {
@@ -26,7 +26,7 @@ const CandidateBoard = () => {
             companyType: "Startups / Big Tech",
             hype: "GT CS MS. Founding Engineer @ Phia. Shipped mobile & web infra for YC startups (Overlap, Sellraze). Expert in 0-to-1 product engineering and Ex-Amazon Intern.",
             tags: ["React", "TypeScript", "Node.js", "Python"],
-            image: "/syaam.jpeg",
+            image: `${import.meta.env.BASE_URL}syaam.jpeg`,
             link: "https://www.linkedin.com/in/syaamkhandaker"
         },
         {
@@ -37,7 +37,7 @@ const CandidateBoard = () => {
             companyType: "Big Tech",
             hype: "GT CS (4.0 GPA). TikTok SWE Intern who built Redis-backed propagation layers. Expert in Go, AWS, and Distributed Systems.",
             tags: ["Go", "Distributed Systems", "AWS", "Redis"],
-            image: "/alex.jpeg",
+            image: `${import.meta.env.BASE_URL}alex.jpeg`,
             link: "https://www.linkedin.com/in/ayhschen"
         },
         {
@@ -48,7 +48,7 @@ const CandidateBoard = () => {
             companyType: "AI Startups / Big Tech",
             hype: "NYU CS. AI Specialist (ex-Microsoft, Medidata). Built LLM agents, vector search, and MERN apps with continuous deployment.",
             tags: ["AI", "React", "AWS", "LLMs"],
-            image: "/henry.jpeg",
+            image: `${import.meta.env.BASE_URL}henry.jpeg`,
             link: "https://www.linkedin.com/in/henryszhang"
         },
         {
@@ -59,7 +59,7 @@ const CandidateBoard = () => {
             companyType: "Big Tech",
             hype: "GT CS (AI/ML). Meta AI. Ex-Amazon, Citi, Lockheed Martin Intern. Winner of AI ATL Hackathon. Expert in building agentic AI and full-stack infra.",
             tags: ["Java", "Python", "AWS", "React", "AI"],
-            image: "/namkhang.jpeg",
+            image: `${import.meta.env.BASE_URL}namkhang.jpeg`,
             link: "https://linkedin.com/in/NamkhangNLe"
         }
     ];
