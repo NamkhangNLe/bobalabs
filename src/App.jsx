@@ -111,7 +111,7 @@ const Footer = () => (
 
 const App = () => {
     return (
-        <Router>
+        <Router basename="/bobalabs">
             <ScrollToTop />
             <div className="app">
                 <NavBar />
@@ -129,3 +129,4 @@ const App = () => {
 };
 
 export default App
+114
