@@ -11,6 +11,7 @@ import {
     normalizeSectionOrder,
     resumeFileName
 } from './model';
+import { downloadResumePdf, downloadResumeDocx } from './exporters.jsx';
 
 /**
  * useResume — all resume-builder state, persistence, and field operations.
@@ -210,13 +211,15 @@ export const useResume = () => {
         setIsExample(false);
     }, []);
 
-    const printResume = useCallback(() => {
-        trackEvent('resume_exported');
-        // The print dialog names the PDF after document.title; keep it in sync
-        // with the resume's name field right before printing.
-        document.title = resumeFileName(resumeData.personal.name);
-        window.print();
-    }, [resumeData.personal.name]);
+    const downloadPdf = useCallback(
+        () => downloadResumePdf(resumeData, sectionOrder),
+        [resumeData, sectionOrder]
+    );
+
+    const downloadDocx = useCallback(
+        () => downloadResumeDocx(resumeData, sectionOrder),
+        [resumeData, sectionOrder]
+    );
 
     return {
         resumeData,
@@ -238,6 +241,7 @@ export const useResume = () => {
         moveBullet,
         moveSection,
         clearResume,
-        printResume
+        downloadPdf,
+        downloadDocx
     };
 };
