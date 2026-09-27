@@ -29,7 +29,7 @@ export const EXAMPLE_DATA = {
         name: "Namkhang Le",
         email: "NamkhangNLe@hotmail.com",
         phone: "(571) 443-0967",
-        location: "Atlanta, GA",
+        location: "San Francisco, CA",
         website: "NamkhangNLe.github.io",
         linkedin: "linkedin.com/in/NamkhangNLe"
     },
@@ -52,7 +52,7 @@ export const EXAMPLE_DATA = {
             bullets: [
                 "Engineered a Java and Spring-based customer-facing communication service to automate the delivery of 10+ Government Cloud request email notifications (received, approved, denied) per day by enabling seamless integration with 3 native AWS packages.",
                 "Redesigned a 13-year-old email system into a scalable, end-to-end microservices architecture using AWS SWF, SNS, and SQS achieving a processing rate of over 5 transactions per second (TPS), ensuring redundancy and autoscaling across the application.",
-                "Architected a 1st place-winning Amazon Bedrock-powered AI onboarding buddy, fine-tuned on internal documentation, to significantly reduce ramp-up lag time for new software engineers company-wide and reducing question response time."
+                "Architected a 1st place-winning Amazon Bedrock-powered AI onboarding buddy, fine-tuned on internal documentation, to reduce ramp-up lag time for new software engineers company-wide and speed up question response time."
             ]
         },
         {
@@ -82,7 +82,7 @@ export const EXAMPLE_DATA = {
     ],
     projects: [
         {
-            name: " Georgia Tech Computer Science Capstone Project",
+            name: "Georgia Tech Computer Science Capstone Project",
             link: "https://github.com/NamkhangNLe/hemodynamics-calculator",
             techStack: "React, Express, MongoDB",
             date: "August 2023 - May 2024",
@@ -113,7 +113,7 @@ export const EXAMPLE_DATA = {
             bullets: [
                 "Preprocessed 3 datasets comprising over 200,000 samples for the training of a custom machine learning model Scikit-learn.",
                 "Developed a decision tree classifier and a convolutional neural network using Keras achieving a 97% translation accuracy.",
-                "Implemented a React-base frontend built using HTML, CSS, and JavaScript connected to a Python Flask backend with Rest API endpoints for optimized communication with the CNN model hosted on Google Cloud's Vertex AI platform."
+                "Implemented a React-based frontend built using HTML, CSS, and JavaScript connected to a Python Flask backend with REST API endpoints for optimized communication with the CNN model hosted on Google Cloud's Vertex AI platform."
             ]
         },
         {
@@ -122,7 +122,7 @@ export const EXAMPLE_DATA = {
             techStack: "Swift, CoreML",
             date: "October 2023",
             description: "",
-            bullets: [" Employed Swift-based iOS application for Morse code translation, integrating Torch and Carthage binary framework.",
+            bullets: ["Employed Swift-based iOS application for Morse code translation, integrating Torch and Carthage binary framework.",
                 "Executed K-means clustering algorithm using CoreML enabling real-time translation of optical signals with a 75% accuracy rate."]
         }
 
@@ -131,7 +131,7 @@ export const EXAMPLE_DATA = {
         languages: "Java, Python, C, SQL, JavaScript, CSS, HTML, Unified Modeling Language, C#, R, Swift, LaTeX",
         technologies: "Spring Boot, Angular, Android Studio, Bootstrap, RESTful APIs, Gradle, Pandas, Postman, React, Linux",
         development: "Agile, Jira, CI/CD, DevSecOps, CLI, Confluence, Coverity, Jenkins, Artifactory, Unit Test, Git",
-        spokenLanguages: "Spoken Languages: English (Native), Vietnamese (Fluent), Spanish (Limited Working Proficiency)",
+        spokenLanguages: "English (Native), Vietnamese (Fluent), Spanish (Limited Working Proficiency)",
         affiliations: "Google Student Developer (Technical Lead), Competitive Programming, Mentor Jackets, Student Alumni Association"
     }
 };
@@ -408,7 +408,7 @@ export const sanitizeUrl = (url) => {
     return trimmed;
 };
 
-/** The example data stores the "Spoken Languages:" label inside the value itself;
+/** Older saves may store the "Spoken Languages:" label inside the value itself;
  *  strip a leading label at render time so the preview doesn't print it twice. */
 export const withoutSpokenPrefix = (value) =>
     (value || '').replace(/^spoken languages:\s*/i, '');
