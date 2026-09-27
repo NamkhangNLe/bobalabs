@@ -476,7 +476,6 @@ const ResumePage = () => {
         window.print();
     };
 
-    return (
     const educationEditor = (
         <section className="editor-section" key="education">
             {renderSectionHeader('Education', 'education',
@@ -569,7 +568,6 @@ const ResumePage = () => {
         </section>
     );
 
-    return (
     const projectsEditor = (
         <section className="editor-section" key="projects">
             {renderSectionHeader('Projects', 'projects',
@@ -675,7 +673,6 @@ const ResumePage = () => {
         skills: skillsEditor
     };
 
-    return (
     const educationPreview = (
         <section className="resume-section" key="education">
             <h2 className="section-title">Education</h2>
@@ -720,7 +717,6 @@ const ResumePage = () => {
         </section>
     );
 
-    return (
     const projectsPreview = (
         <section className="resume-section" key="projects">
             <h2 className="section-title">Projects</h2>
