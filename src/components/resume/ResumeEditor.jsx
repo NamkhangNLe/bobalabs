@@ -333,16 +333,43 @@ const ResumeEditor = ({ resume: api }) => {
         skills: <SkillsEditor api={api} />
     };
 
+    // Which export is generating right now ('pdf' | 'docx' | null), so the
+    // button can show a brief "Preparing…" state while the PDF/DOCX libraries
+    // load and render.
+    const [exporting, setExporting] = useState(null);
+    const handleExport = (kind) => async () => {
+        if (exporting) return;
+        setExporting(kind);
+        try {
+            await (kind === 'pdf' ? api.downloadPdf() : api.downloadDocx());
+        } finally {
+            setExporting(null);
+        }
+    };
+
     return (
         <div className="resume-editor no-print">
             <div className="editor-header">
                 <h2>Resume Editor</h2>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     <button className="btn btn-secondary" onClick={api.clearResume}>Start from scratch</button>
-                    <button className="btn btn-primary" onClick={api.printResume}>Download PDF</button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={handleExport('docx')}
+                        disabled={exporting !== null}
+                    >
+                        {exporting === 'docx' ? 'Preparing…' : 'Download .docx'}
+                    </button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={handleExport('pdf')}
+                        disabled={exporting !== null}
+                    >
+                        {exporting === 'pdf' ? 'Preparing…' : 'Download PDF'}
+                    </button>
                 </div>
             </div>
-            <p className="export-hint">Clicking "Download PDF" opens your system's print dialog — choose "Save as PDF" as the destination.</p>
+            <p className="export-hint">Downloads a print-ready file named after you — no print dialog needed.</p>
 
             <PersonalInfoEditor api={api} />
             {api.sectionOrder.map((key) => editors[key])}
