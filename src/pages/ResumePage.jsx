@@ -1,5 +1,5 @@
 import React from 'react';
-import useResume from '../resume/useResume';
+import { useResume } from '../resume/useResume';
 import ResumeEditor from '../components/resume/ResumeEditor';
 import ResumePreview from '../components/resume/ResumePreview';
 
