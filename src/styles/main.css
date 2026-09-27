@@ -172,18 +172,14 @@ h3 {
 .resume-maker-container {
   display: flex;
   height: calc(100vh - 76px);
-  /* More vertical space */
   overflow: hidden;
   background: transparent;
   gap: 1rem;
-  /* Reduced gap */
   padding: 0.5rem 1rem 1rem 1rem;
-  /* Reduced padding */
 }
 
 .resume-editor {
   flex: 0 0 450px;
-  /* Fixed width for editor */
   padding: 1.5rem;
   overflow-y: auto;
   border-radius: var(--radius-lg);
@@ -197,7 +193,6 @@ h3 {
 
 .resume-preview {
   flex: 1;
-  /* Maximized preview area */
   padding: 1rem;
   overflow-y: auto;
   background: rgba(255, 255, 255, 0.2);
@@ -264,7 +259,6 @@ h3 {
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
-
 
 .editor-item input,
 .editor-item textarea,
@@ -372,7 +366,6 @@ h3 {
 /* LaTeX Resume Preview Styling */
 .latex-resume {
   width: 8.5in;
-  /* Fixed 11in height for authentic preview in editor */
   height: 11in;
   padding: 0.8cm;
   box-sizing: border-box;
@@ -496,18 +489,31 @@ h3 {
   .latex-resume {
     box-shadow: none !important;
     margin: 0 !important;
-    width: 8.5in !important;
-    height: 11in !important;
-    padding: 0.8cm !important;
-    position: fixed;
-    top: 0;
-    left: 0;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: static !important;
     transform: none !important;
+    flex-shrink: 1;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .preview-scale-outer {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .preview-scale-inner {
+    transform: none !important;
+    width: auto !important;
   }
 
   @page {
     size: letter;
-    margin: 0;
+    margin: 0.45in 0.55in;
   }
 }
 
@@ -827,7 +833,7 @@ h3 {
   border-radius: var(--radius-lg);
   padding: 2rem;
   border: 1px solid var(--glass-border);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
   text-align: center;
 }
@@ -1100,7 +1106,6 @@ h3 {
 }
 
 /* ===== The Daily Brew Blog Styles ===== */
-
 
 /* Hero featured article */
 .blog-hero {
@@ -1476,14 +1481,47 @@ h3 {
   color: var(--primary-color);
 }
 
-/* Print: never scale the resume on paper. */
-@media print {
-  .preview-scale-outer {
-    height: auto !important;
-    overflow: visible !important;
-  }
+/* (Print scaler rules live in the main @media print block above.) */
+/* ===== Resume Builder: flexible bullets + descriptions + overflow warning ===== */
 
-  .preview-scale-inner {
-    transform: none !important;
-  }
+/* Up/down reorder controls stacked beside each bullet textarea */
+.bullet-reorder {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.bullet-reorder .btn-small {
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+/* Optional freeform description textarea inside an entry */
+.description-field {
+  margin: 0.5rem 0 0.2rem 0;
+  font-style: italic;
+}
+
+/* Freeform description paragraph in the printed resume */
+.entry-description {
+  font-size: 10.5pt;
+  line-height: 1.25;
+  margin: 2px 0 3px 0;
+}
+
+/* One-page overflow warning badge in the preview header (never printed) */
+.overflow-warning {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
