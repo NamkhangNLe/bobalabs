@@ -18,22 +18,26 @@ const OutcomeNudge = () => {
     });
     if (hidden) return null;
 
-    const celebrate = () => {
+    const celebrate = (outcomeType) => {
         try {
             localStorage.setItem(STORAGE_KEY, '1');
         } catch {
             /* storage blocked — still celebrate */
         }
-        trackEvent('outcome_reported', { got_outcome: true });
+        // Explicit self-reported type only: interview | offer | job.
+        // No resume content, no personal details, no inference.
+        trackEvent('outcome_reported', { outcome_type: outcomeType });
         setHidden(true);
     };
 
     return (
         <section className="editor-section">
-            <p style={{ margin: '0 0 0.25rem 0' }}><strong>Got an interview or offer? Tell us 🎉</strong></p>
+            <p style={{ margin: '0 0 0.25rem 0' }}><strong>Got an interview, offer, or job? Tell us 🎉</strong></p>
             <p className="ats-blurb">Self-reported — we only count what you tell us.</p>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button className="btn btn-primary btn-sm" onClick={celebrate}>Yes 🎉</button>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <button className="btn btn-primary btn-sm" onClick={() => celebrate('interview')}>Interview 🎉</button>
+                <button className="btn btn-primary btn-sm" onClick={() => celebrate('offer')}>Offer 🎉</button>
+                <button className="btn btn-primary btn-sm" onClick={() => celebrate('job')}>Job 🎉</button>
                 <button className="btn btn-secondary btn-sm" onClick={() => setHidden(true)}>Not yet</button>
             </div>
         </section>

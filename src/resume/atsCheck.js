@@ -8,7 +8,7 @@
 
 let workerReady = false;
 
-async function loadPdfJs() {
+export async function loadPdfJs() {
     const pdfjs = await import('pdfjs-dist');
     if (!workerReady) {
         const { default: workerUrl } = await import('pdfjs-dist/build/pdf.worker.min.mjs?url');
@@ -16,6 +16,32 @@ async function loadPdfJs() {
         workerReady = true;
     }
     return pdfjs;
+}
+
+/**
+ * Count pages in compiled PDF bytes. pdf.js first — it understands object
+ * streams and compressed xref tables, which a raw text scan can't see
+ * (pdfTeX packs page objects into /ObjStm, so the old /Type /Page regex
+ * found nothing and the count came back null). Regex fallback for
+ * plain-structure PDFs, null when nothing works.
+ */
+export async function countPdfPages(bytes) {
+    try {
+        const pdfjs = await loadPdfJs();
+        const doc = await pdfjs.getDocument({ data: bytes }).promise;
+        const n = doc.numPages;
+        await doc.destroy();
+        if (Number.isInteger(n) && n > 0) return n;
+    } catch {
+        /* fall through to the text scan */
+    }
+    try {
+        const text = new TextDecoder('latin1').decode(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes));
+        const matches = text.match(/\/Type\s*\/Page[^s]/g);
+        return matches ? matches.length : null;
+    } catch {
+        return null;
+    }
 }
 
 /** Extract plain text per page from compiled PDF bytes. */

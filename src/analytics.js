@@ -12,25 +12,12 @@ let enabled = false;
 export const initPostHog = () => {
     if (!POSTHOG_KEY) return;
 
-    // Stable per-browser ID so "unique people compiling" is measurable.
-    // Random UUID — never the user's name, email, or resume content.
-    let userId = null;
     try {
-        userId = localStorage.getItem("user_id");
-        if (!userId) {
-            userId = crypto.randomUUID();
-            localStorage.setItem("user_id", userId);
-        }
-    } catch {
-        /* storage blocked — continue without an ID */
-    }
-
-    try {
+        // No custom identify and no locally minted user ID — PostHog assigns
+        // its own anonymous distinct_id. Nothing here can be tied back to a
+        // person, their resume, or their contact details.
         posthog.init(POSTHOG_KEY, {
             api_host: POSTHOG_HOST,
-            loaded: (ph) => {
-                if (userId) ph.identify(userId);
-            },
         });
         enabled = true;
     } catch (e) {

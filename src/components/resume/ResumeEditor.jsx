@@ -339,10 +339,11 @@ const ResumeEditor = ({ resume: api, latex }) => {
         skills: <SkillsEditor api={api} />
     };
 
-    // Export state ('pdf' | 'tex' | null). The PDF button hands over the exact
-    // bytes the LaTeX engine compiled for preview. The .tex button downloads
-    // the generated LaTeX source (resume.tex + preamble.tex) for Overleaf or
-    // local compilation.
+    // Export state ('pdf' | 'tex' | 'preamble' | null). The PDF button hands over
+    // the exact bytes the LaTeX engine compiled for preview. The .tex buttons
+    // download the generated LaTeX source for Overleaf or local compilation —
+    // one file per button, because browsers block multiple downloads from a
+    // single click.
     const [exporting, setExporting] = useState(null);
     const downloadTextFile = (name, text) => {
         const url = URL.createObjectURL(new Blob([text], { type: 'text/x-tex;charset=utf-8' }));
@@ -364,9 +365,12 @@ const ResumeEditor = ({ resume: api, latex }) => {
         }
         setExporting(kind);
         try {
-            downloadTextFile('resume.tex', resumeToLatex(api.resumeData, api.sectionOrder));
-            downloadTextFile('preamble.tex', preambleTex);
-            trackEvent('resume_tex_downloaded');
+            if (kind === 'preamble') {
+                downloadTextFile('preamble.tex', preambleTex);
+            } else {
+                downloadTextFile('resume.tex', resumeToLatex(api.resumeData, api.sectionOrder));
+                trackEvent('resume_tex_downloaded');
+            }
         } finally {
             setExporting(null);
         }
@@ -411,9 +415,17 @@ const ResumeEditor = ({ resume: api, latex }) => {
                         className="btn btn-secondary"
                         onClick={handleExport('tex')}
                         disabled={exporting !== null}
-                        title="LaTeX source for Overleaf or local compilation"
+                        title="The resume LaTeX source — for Overleaf or local compilation"
                     >
-                        {exporting === 'tex' ? 'Preparing…' : 'Download .tex'}
+                        {exporting === 'tex' ? 'Preparing…' : 'resume.tex'}
+                    </button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={handleExport('preamble')}
+                        disabled={exporting !== null}
+                        title="Shared LaTeX preamble used by the resume — needed alongside resume.tex"
+                    >
+                        {exporting === 'preamble' ? 'Preparing…' : 'preamble.tex'}
                     </button>
                     <button
                         className="btn btn-primary"

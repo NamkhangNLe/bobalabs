@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getPdfTeXEngine, ENGINE_DIR } from './pdftexEngine';
 import { resumeToLatex } from '../resume/latexGen';
+import { countPdfPages } from '../resume/atsCheck';
 import { trackEvent } from '../analytics';
 import preambleTex from '../resume/preamble.tex?raw';
 
@@ -22,17 +23,6 @@ const withTimeout = (promise, ms, message) =>
     ]);
 
 const COMPILE_TIMEOUT_MS = 60000;
-
-/** Count pages in a compiled PDF by scanning for page objects. */
-export function countPdfPages(bytes) {
-    try {
-        const text = new TextDecoder('latin1').decode(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes));
-        const matches = text.match(/\/Type\s*\/Page[^s]/g);
-        return matches ? matches.length : null;
-    } catch {
-        return null;
-    }
-}
 
 /** Pull the first LaTeX error line out of a compile log. */
 export function firstLatexError(log) {
@@ -113,7 +103,7 @@ export function useLatexResume(resumeData, sectionOrder, options = {}) {
             if (urlRef.current) URL.revokeObjectURL(urlRef.current);
             urlRef.current = url;
             bytesRef.current = bytes;
-            const pages = countPdfPages(bytes);
+            const pages = await countPdfPages(bytes);
             setPdfUrl(url);
             setPageCount(pages);
             setStatus('ready');

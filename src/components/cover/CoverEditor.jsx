@@ -47,9 +47,13 @@ const CoverEditor = ({ cover, latex }) => {
         }
         setExporting(kind);
         try {
-            downloadTextFile('cover-letter.tex', coverToLatex(cover.coverData));
-            downloadTextFile('preamble.tex', preambleTex);
-            trackEvent('cover_letter_tex_downloaded');
+            // One file per button — browsers block multiple downloads from a single click.
+            if (kind === 'preamble') {
+                downloadTextFile('preamble.tex', preambleTex);
+            } else {
+                downloadTextFile('cover-letter.tex', coverToLatex(cover.coverData));
+                trackEvent('cover_letter_tex_downloaded');
+            }
         } finally {
             setExporting(null);
         }
@@ -91,9 +95,17 @@ const CoverEditor = ({ cover, latex }) => {
                         className="btn btn-secondary"
                         onClick={handleExport('tex')}
                         disabled={exporting !== null}
-                        title="LaTeX source for Overleaf or local compilation"
+                        title="The cover letter LaTeX source — for Overleaf or local compilation"
                     >
-                        {exporting === 'tex' ? 'Preparing…' : 'Download .tex'}
+                        {exporting === 'tex' ? 'Preparing…' : 'cover-letter.tex'}
+                    </button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={handleExport('preamble')}
+                        disabled={exporting !== null}
+                        title="Shared LaTeX preamble — needed alongside cover-letter.tex"
+                    >
+                        {exporting === 'preamble' ? 'Preparing…' : 'preamble.tex'}
                     </button>
                     <button
                         className="btn btn-primary"
