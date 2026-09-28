@@ -6,12 +6,19 @@
  * tracking parsers actually care about. Never sends content anywhere.
  */
 
+import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
 let workerReady = false;
+
+/** Last pdf.js failure, surfaced in ATS details so a broken setup is diagnosable. */
+let lastPdfError = null;
+export function getLastPdfError() {
+    return lastPdfError;
+}
 
 export async function loadPdfJs() {
     const pdfjs = await import('pdfjs-dist');
     if (!workerReady) {
-        const { default: workerUrl } = await import('pdfjs-dist/build/pdf.worker.min.mjs?url');
         pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
         workerReady = true;
     }
@@ -32,7 +39,8 @@ export async function countPdfPages(bytes) {
         const n = doc.numPages;
         await doc.destroy();
         if (Number.isInteger(n) && n > 0) return n;
-    } catch {
+    } catch (e) {
+        lastPdfError = e;
         /* fall through to the text scan */
     }
     try {
@@ -73,7 +81,10 @@ export async function runAtsChecks(bytes, pageCount) {
     if (pageCount === 1) {
         push('pages', 'One page', 'pass', 'The compiled PDF is exactly one page.');
     } else if (pageCount == null) {
-        push('pages', 'One page', 'warn', 'Compile the resume first to verify the page count.');
+        const err = getLastPdfError();
+        push('pages', 'One page', 'warn',
+            err ? `Page count unavailable (${err.message || String(err)}).`
+                : 'Compile the resume first to verify the page count.');
     } else {
         push('pages', 'One page', 'fail', `The compiled PDF is ${pageCount} pages — most parsers and recruiters prefer one.`);
     }
@@ -83,8 +94,9 @@ export async function runAtsChecks(bytes, pageCount) {
     try {
         const pages = await extractPdfText(bytes);
         text = pages.join('\n');
-    } catch {
-        push('extractable', 'Text is extractable', 'fail', 'Could not read any text from the PDF.');
+    } catch (e) {
+        push('extractable', 'Text is extractable', 'fail',
+            `Could not read any text from the PDF. (${e?.message || String(e)})`);
         return finalize(checks);
     }
     const words = text.split(/\s+/).filter(Boolean);
