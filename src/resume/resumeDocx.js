@@ -6,7 +6,8 @@ import {
     AlignmentType,
     TabStopType,
     BorderStyle,
-    ExternalHyperlink
+    ExternalHyperlink,
+    Tab
 } from 'docx';
 import { sanitizeUrl, withoutSpokenPrefix } from './model';
 
@@ -36,12 +37,16 @@ const sectionTitle = (text) =>
     });
 
 /** Two-column row: left text, right-aligned date/location. Content width is
- *  7.5in (letter page, 0.5in margins) = 10800 twips. */
+ *  7.5in (letter page, 0.5in margins) = 10800 twips. Uses a real <w:tab/>
+ *  element — a tab *character* inside a TextRun gets escaped to literal "\t"
+ *  text by the docx serializer and renders visibly broken. */
+const tabRun = () => new TextRun({ children: [new Tab()], font: FONT, size: BODY });
+
 const twoColRow = (leftRuns, rightText) =>
     new Paragraph({
         tabStops: [{ type: TabStopType.RIGHT, position: 10800 }],
         spacing: { after: 20 },
-        children: [...leftRuns, run('\t'), run(rightText || '')]
+        children: [...leftRuns, tabRun(), run(rightText || '')]
     });
 
 const descriptionPara = (text) =>

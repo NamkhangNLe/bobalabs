@@ -1391,11 +1391,13 @@ h3 {
     overflow: visible;
   }
 
+  /* Keep the fixed 8.5x11in page on small screens too — the preview scaler
+     (preview-scale-inner) shrinks it to fit, so the page never collapses
+     as content is deleted. */
   .latex-resume {
-    width: 100%;
-    min-height: auto;
-    padding: 1rem;
-    height: auto;
+    width: 8.5in;
+    height: 11in;
+    min-height: 11in;
   }
 }
 
