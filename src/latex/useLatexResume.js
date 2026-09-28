@@ -11,7 +11,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getPdfTeXEngine, ENGINE_DIR } from './pdftexEngine';
 import { resumeToLatex } from '../resume/latexGen';
+import { trackEvent } from '../analytics';
 import preambleTex from '../resume/preamble.tex?raw';
+
+/** Reject if the promise doesn't settle within ms — a hung engine shouldn't hang the UI. */
+const withTimeout = (promise, ms, message) =>
+    Promise.race([
+        promise,
+        new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms))
+    ]);
+
+const COMPILE_TIMEOUT_MS = 60000;
 
 /** Count pages in a compiled PDF by scanning for page objects. */
 export function countPdfPages(bytes) {
@@ -37,7 +47,15 @@ export function firstLatexError(log) {
 }
 
 export function useLatexResume(resumeData, sectionOrder, options = {}) {
-    const { debounceMs = 900 } = options;
+    const {
+        debounceMs = 900,
+        // Document type overrides: cover letters pass their own generator
+        // and main file. Defaults compile the resume.
+        toLatex = resumeToLatex,
+        mainFile = 'resume.tex',
+        // Analytics event fired on each successful compile (null = silent).
+        compiledEvent = null,
+    } = options;
     const [status, setStatus] = useState('loading'); // loading | ready | compiling | error
     const [pdfUrl, setPdfUrl] = useState(null);
     const [pageCount, setPageCount] = useState(null);
@@ -54,7 +72,13 @@ export function useLatexResume(resumeData, sectionOrder, options = {}) {
         engineReady.current = (async () => {
             const engine = getPdfTeXEngine();
             await engine.loadEngine();
-            await engine.setTexliveEndpoint(`${ENGINE_DIR}texlive/`);
+            // The worker fetches TeX files with sync XHR, where relative URLs
+            // resolve against the *worker script's* location, not the page.
+            // Anchor the endpoint to the worker script directory as an absolute
+            // URL — a relative endpoint silently 404s every fetch and the
+            // compile fails with no usable error.
+            const workerUrl = new URL(`${ENGINE_DIR}swiftlatexpdftex.worker.js`, document.baseURI).href;
+            await engine.setTexliveEndpoint(new URL('texlive/', workerUrl).href);
             const res = await fetch(`${ENGINE_DIR}pdflatex.fmt`);
             if (!res.ok) throw new Error('Could not load the LaTeX format file.');
             const fmt = new Uint8Array(await res.arrayBuffer());
@@ -71,29 +95,36 @@ export function useLatexResume(resumeData, sectionOrder, options = {}) {
         try {
             const engine = await boot();
             if (seq !== compileSeq.current) return; // superseded
-            const tex = resumeToLatex(resumeData, sectionOrder);
+            const tex = toLatex(resumeData, sectionOrder);
             // Encode explicitly: the engine's FS.writeFile takes bytes, and the
             // proven node harness wrote these files as UTF-8 byte arrays.
             const enc = new TextEncoder();
-            await engine.writeMemFSFile('resume.tex', enc.encode(tex));
+            await engine.writeMemFSFile(mainFile, enc.encode(tex));
             await engine.writeMemFSFile('preamble.tex', enc.encode(preambleTex));
-            await engine.setEngineMainFile('resume.tex');
-            const { pdf } = await engine.compileLaTeX();
+            await engine.setEngineMainFile(mainFile);
+            const { pdf } = await withTimeout(
+                engine.compileLaTeX(),
+                COMPILE_TIMEOUT_MS,
+                'Compilation timed out — try again.'
+            );
             if (seq !== compileSeq.current) return; // superseded
             const bytes = new Uint8Array(pdf);
             const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
             if (urlRef.current) URL.revokeObjectURL(urlRef.current);
             urlRef.current = url;
             bytesRef.current = bytes;
+            const pages = countPdfPages(bytes);
             setPdfUrl(url);
-            setPageCount(countPdfPages(bytes));
+            setPageCount(pages);
             setStatus('ready');
+            // Analytics: what compiled and how many pages — never content.
+            if (compiledEvent) trackEvent(compiledEvent, { pages });
         } catch (e) {
             if (seq !== compileSeq.current) return;
             setError(firstLatexError(e.message));
             setStatus('error');
         }
-    }, [boot, resumeData, sectionOrder]);
+    }, [boot, resumeData, sectionOrder, toLatex, mainFile, compiledEvent]);
 
     // Initial compile after boot.
     useEffect(() => {

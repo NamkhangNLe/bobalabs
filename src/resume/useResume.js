@@ -11,7 +11,7 @@ import {
     normalizeSectionOrder,
     resumeFileName
 } from './model';
-import { downloadResumePdf, downloadResumeDocx } from './exporters.jsx';
+import { extractBobalabsData } from './latexGen';
 
 /**
  * useResume — all resume-builder state, persistence, and field operations.
@@ -211,15 +211,23 @@ export const useResume = () => {
         setIsExample(false);
     }, []);
 
-    const downloadPdf = useCallback(
-        () => downloadResumePdf(resumeData, sectionOrder),
-        [resumeData, sectionOrder]
-    );
-
-    const downloadDocx = useCallback(
-        () => downloadResumeDocx(resumeData, sectionOrder),
-        [resumeData, sectionOrder]
-    );
+    /**
+     * Restore the editor from a .tex file previously downloaded from Boba Labs
+     * (the form data rides in a comment on the first line — see TEX_DATA_MARKER).
+     * Returns null on success, or an error string when the file has no marker.
+     * The uploaded .tex is never compiled; only our own JSON comment is read.
+     */
+    const importTexText = useCallback((texText) => {
+        const parsed = extractBobalabsData(texText);
+        if (!parsed) {
+            return 'Could not read this file — only resume.tex files downloaded from Boba Labs can be re-uploaded.';
+        }
+        skipAutosave.current = true;
+        setResumeData(normalizeResumeData(parsed.data));
+        setSectionOrder(normalizeSectionOrder(parsed.sectionOrder));
+        setIsExample(false);
+        return null;
+    }, []);
 
     return {
         resumeData,
@@ -241,7 +249,6 @@ export const useResume = () => {
         moveBullet,
         moveSection,
         clearResume,
-        downloadPdf,
-        downloadDocx
+        importTexText
     };
 };

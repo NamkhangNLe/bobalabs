@@ -11,7 +11,9 @@ import ResumePreview from '../components/resume/ResumePreview';
  */
 const ResumePage = () => {
     const resume = useResume();
-    const latex = useLatexResume(resume.resumeData, resume.sectionOrder);
+    const latex = useLatexResume(resume.resumeData, resume.sectionOrder, {
+        compiledEvent: 'resume_compiled',
+    });
 
     return (
         <div className="resume-maker-container">

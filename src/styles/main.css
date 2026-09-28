@@ -1427,6 +1427,86 @@ h3 {
   margin: 0 0 1.25rem 0;
 }
 
+.export-error {
+  font-size: 0.82rem;
+  color: #b3261e;
+  margin: -0.75rem 0 1.25rem 0;
+}
+
+/* ATS score checker */
+.ats-section {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.ats-blurb {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.ats-score-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.ats-score {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.ats-score-label {
+  color: var(--text-secondary);
+}
+
+.ats-checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ats-check {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-size: 0.85rem;
+}
+
+.ats-check p {
+  margin: 0.15rem 0 0 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.ats-icon {
+  font-weight: 700;
+  width: 1.2em;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.ats-pass .ats-icon { color: #1a7f37; }
+.ats-warn .ats-icon { color: #9a6700; }
+.ats-fail .ats-icon { color: #b3261e; }
+
+/* Cover letter paragraph actions */
+.para-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+}
+
 /* Preview pane header with the "Example resume" badge */
 .preview-header {  position: sticky;
   top: 0;

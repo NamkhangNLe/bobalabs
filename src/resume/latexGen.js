@@ -28,6 +28,34 @@ const ESCAPES = {
 export const escapeLatex = (s) =>
     (s == null ? '' : String(s)).replace(/[\\&%$#_{}~^]/g, (ch) => ESCAPES[ch]);
 
+// ---------------------------------------------------------------------------
+// Round-trip marker
+// ---------------------------------------------------------------------------
+
+/**
+ * Generated .tex files carry the form data as a JSON blob in a LaTeX comment
+ * on the first line. Re-uploading reads this comment back, so we never have
+ * to parse LaTeX itself (and never compile untrusted .tex).
+ */
+export const TEX_DATA_MARKER = '% bobalabs-data-v1:';
+
+/**
+ * Extract embedded Boba Labs form data from a .tex file we generated.
+ * Returns { data, sectionOrder } or null when the marker is missing/invalid.
+ */
+export function extractBobalabsData(texText) {
+    if (!texText) return null;
+    const line = String(texText).split('\n').find((l) => l.startsWith(TEX_DATA_MARKER));
+    if (!line) return null;
+    try {
+        const parsed = JSON.parse(line.slice(TEX_DATA_MARKER.length));
+        if (!parsed || typeof parsed !== 'object' || !parsed.data || !Array.isArray(parsed.sectionOrder)) return null;
+        return parsed;
+    } catch {
+        return null;
+    }
+}
+
 /** "May 2024 - August 2024" -> "May 2024 -- August 2024" (proper en-dash). */
 export const texDate = (s) => escapeLatex(s).replace(/ - /g, ' -- ');
 
@@ -150,7 +178,10 @@ const SECTION_BUILDERS = {
  */
 export function resumeToLatex(data, sectionOrder) {
     const d = data || {};
+    const order = sectionOrder || [];
     const parts = [
+        // Round-trip marker (see TEX_DATA_MARKER): re-upload restores the form.
+        `${TEX_DATA_MARKER}${JSON.stringify({ data: d, sectionOrder: order })}`,
         '\\documentclass{article}',
         '',
         '\\input{preamble}',
@@ -164,7 +195,7 @@ export function resumeToLatex(data, sectionOrder) {
         '\\begin{flushleft}',
         ''
     ];
-    for (const section of sectionOrder || []) {
+    for (const section of order) {
         const build = SECTION_BUILDERS[section];
         if (!build) continue;
         const tex = build(d);

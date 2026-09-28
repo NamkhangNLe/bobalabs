@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import AutoResizeTextarea from './AutoResizeTextarea';
 import BulletHelper from './BulletHelper';
+import AtsChecker from './AtsChecker';
+import OutcomeNudge from './OutcomeNudge';
+import { trackEvent } from '../../analytics';
 import { checkBullet, BLOG_URL } from '../../resume/bulletGuide';
 import { resumeFileName } from '../../resume/model';
+import { resumeToLatex } from '../../resume/latexGen';
+import preambleTex from '../../resume/preamble.tex?raw';
 
 /**
  * ResumeEditor — the left-hand form. Every field writes into the shared resume
@@ -334,18 +339,34 @@ const ResumeEditor = ({ resume: api, latex }) => {
         skills: <SkillsEditor api={api} />
     };
 
-    // DOCX export still generates on click ('pdf' | 'docx' | null). The PDF
-    // button hands over the exact bytes the LaTeX engine compiled for preview.
+    // Export state ('pdf' | 'tex' | null). The PDF button hands over the exact
+    // bytes the LaTeX engine compiled for preview. The .tex button downloads
+    // the generated LaTeX source (resume.tex + preamble.tex) for Overleaf or
+    // local compilation.
     const [exporting, setExporting] = useState(null);
+    const downloadTextFile = (name, text) => {
+        const url = URL.createObjectURL(new Blob([text], { type: 'text/x-tex;charset=utf-8' }));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+    };
     const handleExport = (kind) => async () => {
         if (exporting) return;
         if (kind === 'pdf') {
-            latex.downloadPdf(`${resumeFileName(api.resumeData.personal.name)}.pdf`);
+            if (latex.downloadPdf(`${resumeFileName(api.resumeData.personal.name)}.pdf`)) {
+                trackEvent('resume_pdf_downloaded');
+            }
             return;
         }
         setExporting(kind);
         try {
-            await api.downloadDocx();
+            downloadTextFile('resume.tex', resumeToLatex(api.resumeData, api.sectionOrder));
+            downloadTextFile('preamble.tex', preambleTex);
+            trackEvent('resume_tex_downloaded');
         } finally {
             setExporting(null);
         }
@@ -353,6 +374,18 @@ const ResumeEditor = ({ resume: api, latex }) => {
 
     const pdfReady = latex.status === 'ready' && latex.pdfUrl;
     const pdfBusy = latex.status === 'loading' || latex.status === 'compiling';
+
+    // Re-upload a resume.tex previously downloaded from Boba Labs: the form
+    // data rides in a comment on the first line, so the editor restores exactly.
+    const texInputRef = useRef(null);
+    const [importError, setImportError] = useState(null);
+    const handleTexFile = async (e) => {
+        const file = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (!file) return;
+        const err = api.importTexText(await file.text());
+        setImportError(err);
+    };
 
     return (
         <div className="resume-editor no-print">
@@ -362,11 +395,25 @@ const ResumeEditor = ({ resume: api, latex }) => {
                     <button className="btn btn-secondary" onClick={api.clearResume}>Start from scratch</button>
                     <button
                         className="btn btn-secondary"
-                        onClick={handleExport('docx')}
-                        disabled={exporting !== null}
-                        title="Approximate Word version for editing — layout may differ from the LaTeX PDF"
+                        onClick={() => { setImportError(null); texInputRef.current && texInputRef.current.click(); }}
+                        title="Re-upload a resume.tex downloaded from Boba Labs to keep editing it here"
                     >
-                        {exporting === 'docx' ? 'Preparing…' : 'Download .docx'}
+                        Upload .tex
+                    </button>
+                    <input
+                        ref={texInputRef}
+                        type="file"
+                        accept=".tex,text/x-tex"
+                        style={{ display: 'none' }}
+                        onChange={handleTexFile}
+                    />
+                    <button
+                        className="btn btn-secondary"
+                        onClick={handleExport('tex')}
+                        disabled={exporting !== null}
+                        title="LaTeX source for Overleaf or local compilation"
+                    >
+                        {exporting === 'tex' ? 'Preparing…' : 'Download .tex'}
                     </button>
                     <button
                         className="btn btn-primary"
@@ -378,10 +425,13 @@ const ResumeEditor = ({ resume: api, latex }) => {
                     </button>
                 </div>
             </div>
-            <p className="export-hint">The PDF is compiled with real LaTeX — what you see is what downloads. The .docx is an approximate editable copy.</p>
+            <p className="export-hint">The PDF is compiled with real LaTeX — what you see is what downloads. The .tex files are the full source, ready for Overleaf.</p>
+            {importError && <p className="export-error" role="alert">{importError}</p>}
 
             <PersonalInfoEditor api={api} />
             {api.sectionOrder.map((key) => editors[key])}
+            <AtsChecker latex={latex} />
+            <OutcomeNudge />
         </div>
     );
 };

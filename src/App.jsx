@@ -5,12 +5,14 @@ import BlogPage from './pages/BlogPage'
 import IntakeTicket from './components/IntakeTicket'
 import CandidateBoard from './pages/CandidateBoard'
 import ResumePage from './pages/ResumePage'
+import CoverPage from './pages/CoverPage'
 import './styles/main.css'
 
 const NAV_ITEMS = [
     { to: '/', label: 'Home' },
     { to: '/blog', label: 'The Daily Brew' },
     { to: '/resume', label: 'Resume Maker' },
+    { to: '/cover', label: 'Cover Letter' },
     { to: '/board', label: 'Find Talent' },
 ]
 
@@ -121,6 +123,7 @@ const App = () => {
                     <Route path="/apply" element={<IntakeTicket />} />
                     <Route path="/blog" element={<BlogPage />} />
                     <Route path="/resume" element={<ResumePage />} />
+                    <Route path="/cover" element={<CoverPage />} />
                 </Routes>
                 <Footer />
             </div>
