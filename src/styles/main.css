@@ -493,21 +493,15 @@ h3 {
     border: none !important;
   }
 
-  .latex-resume {
+  .pdf-preview-frame {
     box-shadow: none !important;
-    margin: 0 !important;
-    /* Fill the printable area set by @page below; height flows naturally so
-       multi-page resumes print every page (no more fixed-position clipping). */
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    padding: 0 !important;
-    position: static !important;
-    transform: none !important;
-    flex-shrink: 1;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    border-radius: 0 !important;
+    aspect-ratio: auto !important;
+    height: 10.5in !important;
+  }
+
+  .pdf-preview-iframe {
+    height: 100% !important;
   }
 
   .preview-scale-outer {
@@ -1434,8 +1428,7 @@ h3 {
 }
 
 /* Preview pane header with the "Example resume" badge */
-.preview-header {
-  position: sticky;
+.preview-header {  position: sticky;
   top: 0;
   z-index: 5;
   display: flex;
@@ -1708,4 +1701,111 @@ h3 {
   .bullet-helper-modal {
     padding: 1rem;
   }
+}
+
+/* ===== Real LaTeX preview (compiled PDF) ===== */
+
+/* PDF preview frame keeps the 8.5x11 page ratio on all screens. */
+.pdf-preview-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8.5 / 11;
+  background: #525659;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+.pdf-preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #525659;
+}
+
+/* Translucent veil while a recompile runs over the last good PDF. */
+.pdf-compiling-veil {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(20, 20, 30, 0.75);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+/* Engine status chips in the preview header. */
+.latex-status {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.latex-status.latex-ok {
+  background: rgba(34, 197, 94, 0.15);
+  color: #15803d;
+}
+
+.latex-retry {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.latex-retry:hover {
+  background: rgba(220, 38, 38, 0.16);
+}
+
+/* Full-panel states before the first successful compile. */
+.latex-loading-panel,
+.latex-error-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: #f4f4f5;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.latex-loading-sub {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.latex-error-title {
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+.latex-error-log {
+  max-width: 100%;
+  max-height: 40%;
+  overflow: auto;
+  padding: 0.75rem 1rem;
+  background: #1e1e1e;
+  color: #fca5a5;
+  border-radius: var(--radius-md);
+  font-size: 0.72rem;
+  text-align: left;
+  white-space: pre-wrap;
 }

@@ -20,6 +20,9 @@ const LEGACY_KEY = 'bobalabs-resume-v1';
 /** Default order of the resume sections (also restored by "Start from scratch"). */
 export const DEFAULT_SECTION_ORDER = ['education', 'experience', 'projects', 'skills'];
 
+/** Section order for the built-in example (mirrors Namkhang's real resume). */
+export const EXAMPLE_SECTION_ORDER = ['experience', 'projects', 'education', 'skills'];
+
 // ---------------------------------------------------------------------------
 // Example + blank states
 // ---------------------------------------------------------------------------
@@ -38,11 +41,24 @@ export const EXAMPLE_DATA = {
             school: "Georgia Institute of Technology",
             location: "",
             degree: "B.S. Computer Science, concentrations in Intelligence (AI/ML) and Information Internetworks",
-            date: "August 2021 - May 2025",
-            coursework: "Data Structures & Algorithms, Artificial Intelligence, Design of Algorithms"
+            date: "",
+            coursework: "Data Structures & Algorithms, Artificial Intelligence, Design & Analysis of Algorithms, Computer Organization & Programming, Probability & Statistics, Combinatorics, Linear Algebra, Computer Systems & Networks, Database Systems"
         }
     ],
     experience: [
+        {
+            company: "Meta (Facebook))",
+            location: "Menlo Park, CA",
+            role: "Software Engineer",
+            date: "August 2025 - Present",
+            description: "",
+            bullets: [
+                "Architected a semantic search and embedding-based retrieval system,  improving content discovery and content accuracy.",
+                "Standardized LLM evaluation pipelines to benchmark GenAI features, reducing hallucination rates by 34% and accuracy by 12%.",
+                "Shipped new GenAI feature on Android, launching AI-powered summaries and contextual suggestions to X+ billion users.",
+                "Led development of an internal full-stack application (React, GraphQL) that scaled Facebook's meme strategy across surfaces, enabling automated content analysis, curation workflows, and cross-functional collaboration."
+            ]
+        },
         {
             company: "Amazon Web Services (AWS)",
             location: "Arlington, VA",
@@ -64,7 +80,8 @@ export const EXAMPLE_DATA = {
             bullets: [
                 "Spearheaded Event Master Central, a full stack application for real-time corporate action event monitoring of financial assets in Angular & Oracle Database increasing engineering awareness of deployment failures by 18%.",
                 "Revamped authentication logic, fortifying API token validation for REST API calls, contributing an 85% uptime to production.",
-                "Orchestrated seamless integration with Institutional Services Group's Cloud services using Spring Boot, optimizing performance through JSON-based HTTP requests, and enhancing overall efficiency by 15% across the application."
+                "Orchestrated seamless integration with Institutional Services Group's Cloud services using Spring Boot, optimizing performance through JSON-based HTTP requests, and enhancing overall efficiency by 15% across the application.",
+                "Leveraged 2 Python's Pandas DataFrame to analyze surface temperatures vs global domestic product, resulting in a 0.8 positive correlation within Tableau in support of Citi's 1 trillion dollar commitment to sustainable finance."
             ]
         },
         {
@@ -76,7 +93,8 @@ export const EXAMPLE_DATA = {
             bullets: [
                 "Trained a wildfire-based infrastructure identification AI model through Kubeflow, Pytorch, & Tensorflow, with 98% accuracy.",
                 "Implemented a real-time data monitoring interface in Spring, driving a 20% increase in operator awareness & object tracking.",
-                "Transformed codebase maintainability by converting logging levels from Apache Log4J to SLF4J, achieving 80% code coverage."
+                "Transformed codebase maintainability by converting logging levels from Apache Log4J to SLF4J, achieving 80% code coverage.",
+                "Collaborated with quality analysis team to execute comprehensive testing, resulting in a 12% reduction in logging inefficiencies."
             ]
         }
     ],
@@ -84,7 +102,7 @@ export const EXAMPLE_DATA = {
         {
             name: "Georgia Tech Computer Science Capstone Project",
             link: "https://github.com/NamkhangNLe/hemodynamics-calculator",
-            techStack: "React, Express, MongoDB",
+            techStack: "JavaScript, ReactJS, MongoDB, ExpressJS, NodeJS",
             date: "August 2023 - May 2024",
             description: "",
             bullets: [
@@ -93,46 +111,24 @@ export const EXAMPLE_DATA = {
             ]
         },
         {
-            name: "DiagnoseMe (Hackalytics Hackathon)",
-            link: "https://devfolio.co/projects/diagnoseme-1992",
-            techStack: "ElectronJS, React, Flask, Pandas",
-            date: "February 2024",
-            description: "",
-            bullets: [
-                "Constructed a ChatGPT powered ElectronJS application for disease diagnosis supporting medical students and doctors in training",
-                "Streamlined user experience by creating 120 unique prompt-engineered scenarios through Pandas DataFrame consolidation.",
-                "Achieved a 15% reduction in development time through REST APIs for seamless data exchange via JSON between React & Flask."
-            ]
-        },
-        {
             name: "ScribbleTex (AI ATL Hackathon Github Winner)",
             link: "https://devpost.com/software/scribbletex",
-            techStack: "React, Flask, Keras, Scikit-learn",
+            techStack: "JavaScript, Google Cloud Platform, VertexAI, Flask, ReactJS",
             date: "November 2023",
             description: "",
             bullets: [
                 "Preprocessed 3 datasets comprising over 200,000 samples for the training of a custom machine learning model Scikit-learn.",
                 "Developed a decision tree classifier and a convolutional neural network using Keras achieving a 97% translation accuracy.",
-                "Implemented a React-based frontend built using HTML, CSS, and JavaScript connected to a Python Flask backend with REST API endpoints for optimized communication with the CNN model hosted on Google Cloud's Vertex AI platform."
+                "Implemented a React-base frontend built using HTML, CSS, and JavaScript connected to a Python Flask backend with Rest API endpoints for optimized communication with the CNN model hosted on Google Cloud's Vertex AI platform."
             ]
-        },
-        {
-            name: "MorseTorch (HackGT Hackathon)",
-            link: "https://devpost.com/software/morse-torch",
-            techStack: "Swift, CoreML",
-            date: "October 2023",
-            description: "",
-            bullets: ["Employed Swift-based iOS application for Morse code translation, integrating Torch and Carthage binary framework.",
-                "Executed K-means clustering algorithm using CoreML enabling real-time translation of optical signals with a 75% accuracy rate."]
         }
-
     ],
     skills: {
-        languages: "Java, Python, C, SQL, JavaScript, CSS, HTML, Unified Modeling Language, C#, R, Swift, LaTeX",
-        technologies: "Spring Boot, Angular, Android Studio, Bootstrap, RESTful APIs, Gradle, Pandas, Postman, React, Linux",
+        languages: "Hack, Java, Python, C, SQL, JavaScript, CSS, HTML, UML, C#, R, Swift, LaTeX",
+        technologies: "GraphQL, Spring Boot, Angular, Android Studio, Bootstrap, RESTful APIs, Gradle, Pandas, Postman, React, Linux",
         development: "Agile, Jira, CI/CD, DevSecOps, CLI, Confluence, Coverity, Jenkins, Artifactory, Unit Test, Git",
         spokenLanguages: "English (Native), Vietnamese (Fluent), Spanish (Limited Working Proficiency)",
-        affiliations: "Google Student Developer (Technical Lead), Competitive Programming, Mentor Jackets, Student Alumni Association"
+        affiliations: ""
     }
 };
 
@@ -359,7 +355,7 @@ export const loadStoredState = () => {
     if (!payload || typeof payload.resumeData !== 'object') {
         return {
             resumeData: JSON.parse(JSON.stringify(EXAMPLE_DATA)),
-            sectionOrder: [...DEFAULT_SECTION_ORDER],
+            sectionOrder: [...EXAMPLE_SECTION_ORDER],
             isExample: true,
             isFresh: true
         };

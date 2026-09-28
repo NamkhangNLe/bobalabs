@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AutoResizeTextarea from './AutoResizeTextarea';
 import BulletHelper from './BulletHelper';
 import { checkBullet, BLOG_URL } from '../../resume/bulletGuide';
+import { resumeFileName } from '../../resume/model';
 
 /**
  * ResumeEditor — the left-hand form. Every field writes into the shared resume
@@ -325,7 +326,7 @@ const SkillsEditor = ({ api }) => (
     </section>
 );
 
-const ResumeEditor = ({ resume: api }) => {
+const ResumeEditor = ({ resume: api, latex }) => {
     const editors = {
         education: <EducationEditor api={api} />,
         experience: <ExperienceEditor api={api} />,
@@ -333,19 +334,25 @@ const ResumeEditor = ({ resume: api }) => {
         skills: <SkillsEditor api={api} />
     };
 
-    // Which export is generating right now ('pdf' | 'docx' | null), so the
-    // button can show a brief "Preparing…" state while the PDF/DOCX libraries
-    // load and render.
+    // DOCX export still generates on click ('pdf' | 'docx' | null). The PDF
+    // button hands over the exact bytes the LaTeX engine compiled for preview.
     const [exporting, setExporting] = useState(null);
     const handleExport = (kind) => async () => {
         if (exporting) return;
+        if (kind === 'pdf') {
+            latex.downloadPdf(`${resumeFileName(api.resumeData.personal.name)}.pdf`);
+            return;
+        }
         setExporting(kind);
         try {
-            await (kind === 'pdf' ? api.downloadPdf() : api.downloadDocx());
+            await api.downloadDocx();
         } finally {
             setExporting(null);
         }
     };
+
+    const pdfReady = latex.status === 'ready' && latex.pdfUrl;
+    const pdfBusy = latex.status === 'loading' || latex.status === 'compiling';
 
     return (
         <div className="resume-editor no-print">
@@ -357,19 +364,21 @@ const ResumeEditor = ({ resume: api }) => {
                         className="btn btn-secondary"
                         onClick={handleExport('docx')}
                         disabled={exporting !== null}
+                        title="Approximate Word version for editing — layout may differ from the LaTeX PDF"
                     >
                         {exporting === 'docx' ? 'Preparing…' : 'Download .docx'}
                     </button>
                     <button
                         className="btn btn-primary"
                         onClick={handleExport('pdf')}
-                        disabled={exporting !== null}
+                        disabled={!pdfReady}
+                        title="The real LaTeX-compiled PDF — identical to the preview"
                     >
-                        {exporting === 'pdf' ? 'Preparing…' : 'Download PDF'}
+                        {latex.status === 'loading' ? 'Loading LaTeX…' : pdfBusy ? 'Compiling…' : 'Download PDF'}
                     </button>
                 </div>
             </div>
-            <p className="export-hint">Downloads a print-ready file named after you — no print dialog needed.</p>
+            <p className="export-hint">The PDF is compiled with real LaTeX — what you see is what downloads. The .docx is an approximate editable copy.</p>
 
             <PersonalInfoEditor api={api} />
             {api.sectionOrder.map((key) => editors[key])}
