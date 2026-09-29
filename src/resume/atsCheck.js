@@ -16,6 +16,17 @@ export function getLastPdfError() {
     return lastPdfError;
 }
 
+/**
+ * Copy bytes for pdf.js. getDocument() transfers (detaches) the input
+ * buffer to its worker via postMessage — handing over the caller's bytes
+ * would neuter them, so every call gets its own copy.
+ */
+function copyForPdfJs(bytes) {
+    if (bytes instanceof Uint8Array) return bytes.slice();
+    if (bytes instanceof ArrayBuffer) return new Uint8Array(bytes.slice(0));
+    return new Uint8Array(bytes);
+}
+
 export async function loadPdfJs() {
     const pdfjs = await import('pdfjs-dist');
     if (!workerReady) {
@@ -37,7 +48,7 @@ export async function countPdfPages(bytes) {
         const pdfjs = await loadPdfJs();
         // pdf.js v6 removed PDFDocumentProxy.destroy() — teardown belongs to
         // the loading task, so keep a reference to it.
-        const loadingTask = pdfjs.getDocument({ data: bytes });
+        const loadingTask = pdfjs.getDocument({ data: copyForPdfJs(bytes) });
         try {
             const doc = await loadingTask.promise;
             const n = doc.numPages;
@@ -62,7 +73,7 @@ export async function countPdfPages(bytes) {
 export async function extractPdfText(bytes) {
     const pdfjs = await loadPdfJs();
     // See countPdfPages: teardown belongs to the loading task in pdf.js v6.
-    const loadingTask = pdfjs.getDocument({ data: bytes });
+    const loadingTask = pdfjs.getDocument({ data: copyForPdfJs(bytes) });
     try {
         const doc = await loadingTask.promise;
         const pages = [];
