@@ -94,54 +94,60 @@ function headerBlock(personal) {
 }
 
 function experienceBlock(entries) {
-    const out = ['\\sectitle{Experience}', ''];
+    const body = [];
     for (const e of entries || []) {
         const bullets = (e.bullets || []).filter(nonEmpty);
         if (!nonEmpty(e.company) && !nonEmpty(e.role) && !nonEmpty(e.description) && bullets.length === 0) continue;
-        out.push(`\\begin{experience}{${escapeLatex(e.company)}}{${escapeLatex(e.location)}}{${escapeLatex(e.role)}}{${texDate(e.date)}}`);
-        if (nonEmpty(e.description)) out.push(`    \\item[] ${escapeLatex(e.description)}`);
-        for (const b of bullets) out.push(`    \\item ${escapeLatex(b)}`);
-        out.push('\\end{experience}');
-        out.push('');
+        body.push(`\\begin{experience}{${escapeLatex(e.company)}}{${escapeLatex(e.location)}}{${escapeLatex(e.role)}}{${texDate(e.date)}}`);
+        if (nonEmpty(e.description)) body.push(`    \\item[] ${escapeLatex(e.description)}`);
+        for (const b of bullets) body.push(`    \\item ${escapeLatex(b)}`);
+        body.push('\\end{experience}');
+        body.push('');
     }
-    return out.join('\n').trimEnd();
+    // No surviving entries: omit the section entirely (no orphan header).
+    if (body.length === 0) return '';
+    return ['\\sectitle{Experience}', '', ...body].join('\n').trimEnd();
 }
 
 function projectsBlock(entries) {
-    const out = ['\\sectitle{Projects}', '', '    \\vspace{3pt}', ''];
+    const body = [];
     for (const e of entries || []) {
         const bullets = (e.bullets || []).filter(nonEmpty);
         if (!nonEmpty(e.name) && bullets.length === 0) continue;
         // Empty URL: hyperref tolerates \href{}{text}; verified in engine tests.
         const url = nonEmpty(e.link) ? (/^https?:\/\//i.test(e.link.trim()) ? e.link.trim() : `https://${e.link.trim()}`) : '';
-        out.push(`\\begin{project}{${escapeLatex(e.name)}}{${url}}{${escapeLatex(e.techStack)}}{${texDate(e.date)}}`);
-        if (nonEmpty(e.description)) out.push(`    \\item[] ${escapeLatex(e.description)}`);
-        for (const b of bullets) out.push(`    \\item ${escapeLatex(b)}`);
-        out.push('\\end{project}');
-        out.push('');
+        body.push(`\\begin{project}{${escapeLatex(e.name)}}{${url}}{${escapeLatex(e.techStack)}}{${texDate(e.date)}}`);
+        if (nonEmpty(e.description)) body.push(`    \\item[] ${escapeLatex(e.description)}`);
+        for (const b of bullets) body.push(`    \\item ${escapeLatex(b)}`);
+        body.push('\\end{project}');
+        body.push('');
     }
-    return out.join('\n').trimEnd();
+    // No surviving entries: omit the section entirely (no orphan header).
+    if (body.length === 0) return '';
+    return ['\\sectitle{Projects}', '', '    \\vspace{3pt}', '', ...body].join('\n').trimEnd();
 }
 
 function educationBlock(entries) {
-    const out = ['\\sectitle{Education}', ''];
+    const body = [];
     for (const e of entries || []) {
         if (!nonEmpty(e.school)) continue;
         // Right-aligned slot: date first, else location (matches \hfill pattern).
         const right = nonEmpty(e.date) ? texDate(e.date) : escapeLatex(e.location);
-        let body = '';
-        if (nonEmpty(e.degree)) body += `{\\textbf{\\textit{${escapeLatex(e.degree)}}}}`;
+        let entry = '';
+        if (nonEmpty(e.degree)) entry += `{\\textbf{\\textit{${escapeLatex(e.degree)}}}}`;
         if (nonEmpty(e.coursework)) {
-            if (body) body += ' \\\\ ';
-            body += `{\\textit{Relevant Coursework}: ${escapeLatex(e.coursework)}}`;
+            if (entry) entry += ' \\\\ ';
+            entry += `{\\textit{Relevant Coursework}: ${escapeLatex(e.coursework)}}`;
         }
         // \school{school}{right}{body} — body already braced above when present.
-        const bodyArg = body.startsWith('{') ? body : `{${body}}`;
-        out.push(`\\school{${escapeLatex(e.school)}} {${right}}`);
-        out.push(bodyArg);
-        out.push('');
+        const bodyArg = entry.startsWith('{') ? entry : `{${entry}}`;
+        body.push(`\\school{${escapeLatex(e.school)}} {${right}}`);
+        body.push(bodyArg);
+        body.push('');
     }
-    return out.join('\n').trimEnd();
+    // No surviving entries: omit the section entirely (no orphan header).
+    if (body.length === 0) return '';
+    return ['\\sectitle{Education}', '', ...body].join('\n').trimEnd();
 }
 
 const SKILL_LABELS = [
