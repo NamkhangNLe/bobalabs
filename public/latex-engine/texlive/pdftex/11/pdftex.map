@@ -511,3 +511,4 @@ ts1-qtmr TeXGyreTermes-Regular "encqts1 ReEncodeFont" <q-ts1.enc <qtmr.pfb
 ts1-qtmri TeXGyreTermes-Italic "encqts1 ReEncodeFont" <q-ts1.enc <qtmri.pfb
 ts1-qtmb TeXGyreTermes-Bold "encqts1 ReEncodeFont" <q-ts1.enc <qtmb.pfb
 ts1-qtmbi TeXGyreTermes-BoldItalic "encqts1 ReEncodeFont" <q-ts1.enc <qtmbi.pfb
+cmsy10 CMSY10 <cmsy10.pfa
