@@ -35,10 +35,16 @@ export async function loadPdfJs() {
 export async function countPdfPages(bytes) {
     try {
         const pdfjs = await loadPdfJs();
-        const doc = await pdfjs.getDocument({ data: bytes }).promise;
-        const n = doc.numPages;
-        await doc.destroy();
-        if (Number.isInteger(n) && n > 0) return n;
+        // pdf.js v6 removed PDFDocumentProxy.destroy() — teardown belongs to
+        // the loading task, so keep a reference to it.
+        const loadingTask = pdfjs.getDocument({ data: bytes });
+        try {
+            const doc = await loadingTask.promise;
+            const n = doc.numPages;
+            if (Number.isInteger(n) && n > 0) return n;
+        } finally {
+            await loadingTask.destroy();
+        }
     } catch (e) {
         lastPdfError = e;
         /* fall through to the text scan */
@@ -55,15 +61,20 @@ export async function countPdfPages(bytes) {
 /** Extract plain text per page from compiled PDF bytes. */
 export async function extractPdfText(bytes) {
     const pdfjs = await loadPdfJs();
-    const doc = await pdfjs.getDocument({ data: bytes }).promise;
-    const pages = [];
-    for (let i = 1; i <= doc.numPages; i++) {
-        const page = await doc.getPage(i);
-        const content = await page.getTextContent();
-        pages.push(content.items.map((it) => it.str).join(' '));
+    // See countPdfPages: teardown belongs to the loading task in pdf.js v6.
+    const loadingTask = pdfjs.getDocument({ data: bytes });
+    try {
+        const doc = await loadingTask.promise;
+        const pages = [];
+        for (let i = 1; i <= doc.numPages; i++) {
+            const page = await doc.getPage(i);
+            const content = await page.getTextContent();
+            pages.push(content.items.map((it) => it.str).join(' '));
+        }
+        return pages;
+    } finally {
+        await loadingTask.destroy();
     }
-    await doc.destroy();
-    return pages;
 }
 
 const EMAIL_RE = /[\w.+-]+@[\w-]+\.[\w.]+/;
