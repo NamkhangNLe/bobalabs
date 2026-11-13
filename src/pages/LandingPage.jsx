@@ -2,11 +2,14 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { candidates } from '../data/candidates';
 
-const filters = ['All', 'Engineering', 'AI', 'Systems'];
+const filters = ['All', 'AI', 'Systems'];
 const matchesFilter = (person, filter) => filter === 'All' ||
-    (filter === 'Engineering' && /engineer/i.test(person.role)) ||
     (filter === 'AI' && person.tags.some(tag => /AI|LLM/i.test(tag))) ||
     (filter === 'Systems' && person.tags.some(tag => /Kernel|Systems|FreeBSD/i.test(tag)));
+
+// Stable editorial selection: directory order is not feature priority.
+const featuredIds = [3, 2, 5];
+const featuredPeople = featuredIds.flatMap(id => candidates.filter(person => person.id === id));
 
 function Asterisk() {
     return <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 2v60M6 17l52 30M6 47l52-30" stroke="currentColor" strokeWidth="7" /></svg>;
@@ -36,7 +39,7 @@ export default function LandingPage() {
                 <div className="bn-orbit" aria-hidden="true" />
                 <p className="bn-world-label">THE PEOPLE MAKE THE DIFFERENCE.</p>
                 <div className="bn-portrait-row">
-                    {[candidates[0], candidates[1], candidates[4]].map((person, i) => <button key={person.id} className={`bn-portrait bn-portrait-${i}`} onClick={() => discover(person.name)} aria-label={`Find ${person.name} in the network`}>
+                    {featuredPeople.map((person, i) => <button key={person.id} className={`bn-portrait bn-portrait-${i}`} onClick={() => discover(person.name)} aria-label={`Find ${person.name} in the network`}>
                         <img src={person.image} alt={person.name} />
                         <span className="bn-portrait-name">{person.name}</span><span className="bn-portrait-role">{person.role}</span>
                     </button>)}
@@ -60,4 +63,4 @@ export default function LandingPage() {
             <div className="bn-invitation-inner"><div><p className="bn-kicker">THERE'S A PLACE FOR YOU HERE.</p><h2>Good people know<br /><em>good people.</em></h2></div><div className="bn-invitation-copy"><p>Tell us what you're building, where you want to go, and who knows your work.</p><Link className="bn-button bn-button-light" to="/apply">Make your introduction <span>↗</span></Link><small>We'll prepare an email for you to review and send.</small></div></div>
         </section>
     </main>;
-                }
+}
