@@ -5,7 +5,7 @@ The original rounded-card/gradient page is replaced by a people-first editorial 
 
 ## Checks
 - `npm run build`
-- `npx playwright install chromium`
+- `cd tests && npm ci && npx playwright install chromium && cd ..`
 - `npm run test:e2e`
 
 Four browser tests cover portrait discovery, search/filter/reset, full-directory navigation, mobile portrait proof and overflow, open/close mobile menu, and application navigation. No email is sent. For a locally installed Chrome, set `CHROME_PATH` to its executable.
