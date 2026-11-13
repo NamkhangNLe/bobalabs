@@ -7,6 +7,7 @@ import CandidateBoard from './pages/CandidateBoard'
 import ResumePage from './pages/ResumePage'
 import CoverPage from './pages/CoverPage'
 import './styles/main.css'
+import './styles/editorial.css'
 
 const NAV_ITEMS = [
     { to: '/', label: 'Home' },
@@ -27,6 +28,11 @@ const NavBar = () => {
     const [mobileOpen, setMobileOpen] = useState(false)
 
     useEffect(() => { setMobileOpen(false) }, [location.pathname])
+    useEffect(() => {
+        const closeOnEscape = event => { if (event.key === 'Escape') setMobileOpen(false) }
+        window.addEventListener('keydown', closeOnEscape)
+        return () => window.removeEventListener('keydown', closeOnEscape)
+    }, [])
 
     return (
         <>
@@ -56,6 +62,8 @@ const NavBar = () => {
                         className={`hamburger ${mobileOpen ? 'open' : ''}`}
                         onClick={() => setMobileOpen(!mobileOpen)}
                         aria-label="Toggle menu"
+                        aria-expanded={mobileOpen}
+                        aria-controls="mobile-navigation"
                     >
                         <span className="hamburger-line" />
                         <span className="hamburger-line" />
@@ -72,7 +80,7 @@ const NavBar = () => {
             />
 
             {/* Mobile drawer */}
-            <div className={`mobile-drawer ${mobileOpen ? 'open' : ''}`}>
+            <div id="mobile-navigation" aria-hidden={!mobileOpen} inert={mobileOpen ? undefined : ''} className={`mobile-drawer ${mobileOpen ? 'open' : ''}`}>
                 {NAV_ITEMS.map(item => (
                     <Link
                         key={item.to}
@@ -98,7 +106,7 @@ const Footer = () => (
                     <span style={{ color: 'var(--text-primary)' }}>Boba</span>
                     <span style={{ color: '#FFB7C5' }}>Labs</span>
                 </span>
-                <p className="footer-tagline" style={{ marginTop: '0.3rem' }}>Built with 🍵 by friends, for friends.</p>
+                <p className="footer-tagline" style={{ marginTop: '0.3rem' }}>Built by friends, for friends.</p>
             </div>
             <div className="footer-links">
                 <Link to="/blog">Blog</Link>
