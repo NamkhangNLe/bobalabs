@@ -14,6 +14,10 @@ test('search, filtering, reset and full directory navigation work', async ({ pag
   await expect(page.getByRole('heading', { name: 'No match, yet.' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset this view' }).click();
   await expect(page.getByRole('status')).toHaveText('5 people in this view');
+  await expect(page.getByRole('button', { name: 'Engineering', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'AI', exact: true }).click();
+  await expect(page.getByRole('status')).toHaveText('2 people in this view');
+  await expect(page.getByRole('link', { name: "View Pau Sum's LinkedIn profile" })).toHaveCount(0);
   await page.getByRole('button', { name: 'Systems', exact: true }).click();
   await expect(page.getByRole('status')).toHaveText('2 people in this view');
   await page.getByRole('link', { name: 'Open full directory' }).click();
