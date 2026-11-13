@@ -123,5 +123,5 @@ dist
 .DS_Store
 
 # Browser test output
-/test-results/
-/playwright-report/
+test-results/
+playwright-report/
