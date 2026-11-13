@@ -83,10 +83,10 @@ const IntakeTicket = () => {
                 }}>
                     <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🎉</div>
                     <h2 style={{ fontFamily: "'Fredoka', sans-serif", marginBottom: '0.5rem' }}>
-                        You're All Set!
+                        Your email is ready
                     </h2>
                     <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                        Your vouch request has been brewed and sent. We'll review your profile and get back to you soon!
+                        We opened your email app with your introduction. Review and send it there to complete your request. If your email app did not open, go back and try again.
                     </p>
                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', opacity: 0.7 }}>
                         Check your email client to complete sending the request.

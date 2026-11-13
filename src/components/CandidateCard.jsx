@@ -22,14 +22,14 @@ const CandidateCard = ({ name, role, hype, tags, targetRole, companyType, link, 
                         {['🐻', '🐼', '🐨', '🐸', '🐱', '🦄'][name.length % 6]}
                     </div>
                 )}
-                <span className="candidate-badge">✓ Vetted</span>
+
             </div>
 
             {/* Info */}
             <div>
                 <h3 style={{
                     margin: '0 0 0.15rem 0',
-                    fontFamily: "'Fredoka', sans-serif",
+                    fontFamily: "'Inter', sans-serif",
                     fontSize: '1.3rem',
                 }}>{name}</h3>
                 <p style={{
@@ -47,12 +47,12 @@ const CandidateCard = ({ name, role, hype, tags, targetRole, companyType, link, 
             {/* Target */}
             <div style={{
                 padding: '0.75rem',
-                background: 'linear-gradient(135deg, #fefce8, #fef9c3)',
+                background: '#f4f6f3',
                 borderRadius: 'var(--radius-md)',
                 border: '1px solid rgba(234, 179, 8, 0.2)',
             }}>
                 <p style={{ margin: 0, fontSize: '0.7rem', fontWeight: 700, color: '#92400e', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Target Brew
+                    Looking for
                 </p>
                 <p style={{ margin: '0.2rem 0 0', fontSize: '0.88rem', color: 'var(--text-primary)' }}>
                     {targetRole} <span style={{ opacity: 0.4 }}>at</span> {companyType}
